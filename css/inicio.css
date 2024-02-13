@@ -1,0 +1,76 @@
+/* Estilos para el cuerpo de la página */
+    html{  
+    background-image: url("cybperunkIni.jpg");
+    background-size: cover; /* Ajusta el tamaño de la imagen para cubrir toda la pantalla */
+    }
+
+
+
+
+    @keyframes neon {
+    0% { color: #cdbf08; text-shadow: none; } 
+    25% { color: #fff; text-shadow: 0 0 2px #fff, 0 0 4px #fff, 0 0 6px #fff, 0 0 10px #cdbf08, 0 0 5px #cdbf08, 0 0 8px #cdbf08, 0 0 10px #cdbf08; } /* Efecto del neón */
+    35% { color: #cdbf08; text-shadow: none; } 
+    45% { color: #fff; text-shadow: 0 0 2px #fff, 0 0 4px #fff, 0 0 6px #fff, 0 0 10px #cdbf08, 0 0 5px #cdbf08, 0 0 8px #cdbf08, 0 0 10px #cdbf08; } 
+    100% { color: #cdbf08; text-shadow: none; }
+    }
+    
+    /* Estilos para el título */
+    h1 {
+        font-family:"04b 30";
+        font-size: 100px;
+        animation: neon 6s infinite alternate;
+    }
+    
+    /* Estilos para los formularios */
+    form {
+        margin: 20px auto; /* Centra el formulario en la página */
+        width: 300px; /* Ancho del formulario */
+    }
+
+    label[for="usuario"] {
+        font-family: "04b 30";
+        color: #ffffff; /* Color deseado para las etiquetas de usuario */
+    }
+    
+    /* Cambiar el color del texto de las etiquetas LABEL con for="password" */
+    label[for="password"] {
+        font-family: "04b 30";
+        color: #ffffff; /* Color deseado para las etiquetas de contraseña */
+    }
+
+    /* Estilos para los campos de entrada */
+    input[type="text"], input[type="password"], input[type="submit"] {
+        font-family:"04b 30";
+        padding: 10px; /* Añade espacio alrededor del contenido del campo de entrada */
+        margin-bottom: 10px; /* Añade espacio entre campos de entrada */
+        width: 100%; /* Ancho completo del campo de entrada */
+        border: 1px solid #ccc; /* Añade un borde alrededor del campo de entrada */
+        border-radius: 5px; /* Añade bordes redondeados al campo de entrada */
+    }
+    
+    input[type="submit"] {
+        background-color: #3f065a; /* Cambia el color de fondo del botón */
+        color: #fff; /* Cambia el color del texto del botón */
+        border: none; /* Elimina el borde del botón */
+        cursor: pointer; /* Cambia el cursor al pasar sobre el botón */
+        transition: background-color 0.5s, box-shadow 0.5s, color 0.7s; /* Agrega una transición suave */
+    }
+    
+    /* Estilos para los botones cuando se pasa el ratón por encima */
+    input[type="submit"]:hover {
+        background-color: #b3a506; /* Cambia el color de fondo del botón cuando se pasa el ratón por encima */
+        box-shadow: 0px 0px 10px 4px rgba(227, 225, 224, 0.87); /* Agrega un borde sombreado cuando el ratón está encima */
+        color:rgb(0, 0, 0);
+    }
+  
+    /* Estilos para los enlaces */
+    a {
+        color: #007bff; /* Cambia el color del texto del enlace */
+        text-decoration: none; /* Elimina el subrayado predeterminado del enlace */
+    }
+    
+    a:hover {
+        text-decoration: underline; /* Subraya el enlace al pasar sobre él */
+    }
+    
