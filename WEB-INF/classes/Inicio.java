@@ -5,19 +5,20 @@ import javax.servlet.ServletException.*;
 
 public class Inicio extends HttpServlet {
 
-    public void doGet(HttpServletRequest request, HttpServletResponse response)
+    public void doGet(HttpServletRequest req, HttpServletResponse res)
             throws ServletException, IOException {
 
-        response.setContentType("text/html;charset=UTF-8");
+        res.setContentType("text/html;charset=UTF-8");
 
-        PrintWriter out = response.getWriter();
+        PrintWriter out = res.getWriter();
         out.println("<HTML><HEAD>");
         out.println("<TITLE>Inicio</TITLE>");
         out.println("<link rel=\"stylesheet\" type=\"text/css\" href=\"css/inicio.css\">");
 
         out.println("</HEAD>");
         out.println("<BODY><CENTER>");
-        out.println("<H1>CONECTA 4</H1><BR><BR>");
+        out.println("<BR><BR>");
+        out.println("<H1>CONECTA 4</H1>");
         out.println("<FORM METHOD=POST ACTION=Login>");
         
         out.println("<LABEL for=usuario>Usuario:</LABEL><BR>");
