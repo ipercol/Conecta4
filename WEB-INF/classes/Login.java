@@ -18,20 +18,20 @@ public class Login extends HttpServlet {
         ResultSet rs;
         PrintWriter out;
         String SQL, usuario, password;
+        HttpSession sesion;
         
         try{
-            try{
+            try {
                 Class.forName("com.mysql.jdbc.Driver");
-            } catch (ClassNotFoundException ex){
-                //Logger.getLogger(Signup.class.getName()).log(Level, SEVERE, null, ex);
+                con = DriverManager.getConnection("jdbc:mysql://localhost:3306/conecta4","root","");
+                st = con.createStatement();
+            } catch (ClassNotFoundException | SQLException e) {
+                throw new ServletException("Error al conectar con la base de datos", e);
             }
-            HttpSession sesion = req.getSession();
+            sesion = req.getSession();
             // Obtener parámetros del formulario
             usuario = req.getParameter("usuario");
             password = req.getParameter("password");
-            
-            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/conecta","root","");
-            st = con.createStatement();
         
             //hash de la contraseña
             try{
@@ -44,7 +44,8 @@ public class Login extends HttpServlet {
                 }
             
             //Consulta
-            SQL = "SELECT * FROM usuarios WHERE Nombre=" + usuario + " AND password=" + password;
+            SQL = "SELECT * FROM usuarios WHERE usuario='" + usuario + "' AND password='" + password + "'";
+
             rs = st.executeQuery(SQL);
             
             out = res.getWriter();
@@ -56,20 +57,13 @@ public class Login extends HttpServlet {
         
             if(rs.next()){
                 sesion.setAttribute("IdUsuario", rs.getString(1));
-                out.println("<FORM id='redirect' ACTION='Menu' METHOD='POST'>");
-                out.println("</FORM>");
-                
-                out.println("<script>");
-                out.println("window.onload = function() {");
-                out.println("}");
-                out.println("</script>");   
+                res.sendRedirect("Interfaz");  
             } else{
                 out.println("<BR>");
                 out.println("<H2>No existe ninguna cuenta con estos credenciales</H2><BR>");
-                out.println("<FORM METHOD=GET ACTION=Inicio>");
-                out.println("</FORM></CENTER>");              
+                res.sendRedirect("Inicio");
                 }
-            out.println("</CENTER></BODY></HTML>");
+
             rs.close();
             st.close();
             con.close();

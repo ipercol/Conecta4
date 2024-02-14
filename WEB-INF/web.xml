@@ -10,6 +10,7 @@
         <servlet-name>Inicio</servlet-name>
         <url-pattern>/Inicio</url-pattern>
     </servlet-mapping>
+
     <servlet>
         <servlet-name>Login</servlet-name>
         <servlet-class>Login</servlet-class>
@@ -17,6 +18,33 @@
     <servlet-mapping>
         <servlet-name>Login</servlet-name>
         <url-pattern>/Login</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>Registro</servlet-name>
+        <servlet-class>Registro</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>Registro</servlet-name>
+        <url-pattern>/Registro</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>CrearCuenta</servlet-name>
+        <servlet-class>CrearCuenta</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>CrearCuenta</servlet-name>
+        <url-pattern>/CrearCuenta</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>Interfaz</servlet-name>
+        <servlet-class>Interfaz</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>Interfaz</servlet-name>
+        <url-pattern>/Interfaz</url-pattern>
     </servlet-mapping>
 
     <session-config>

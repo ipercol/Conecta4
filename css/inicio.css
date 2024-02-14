@@ -17,7 +17,7 @@
     
     /* Estilos para el título */
     h1 {
-        font-family:"04b 30";
+        font-family:"PacFont";
         font-size: 100px;
         animation: neon 6s infinite alternate;
     }
@@ -29,19 +29,19 @@
     }
 
     label[for="usuario"] {
-        font-family: "04b 30";
+        font-family: "NeonRetroDemoVersionRegular";
         color: #ffffff; /* Color deseado para las etiquetas de usuario */
     }
     
     /* Cambiar el color del texto de las etiquetas LABEL con for="password" */
     label[for="password"] {
-        font-family: "04b 30";
+        font-family: "NeonRetroDemoVersionRegular";
         color: #ffffff; /* Color deseado para las etiquetas de contraseña */
     }
 
     /* Estilos para los campos de entrada */
     input[type="text"], input[type="password"], input[type="submit"] {
-        font-family:"04b 30";
+        font-family:"Neon Retro - Demo Version";
         padding: 10px; /* Añade espacio alrededor del contenido del campo de entrada */
         margin-bottom: 10px; /* Añade espacio entre campos de entrada */
         width: 100%; /* Ancho completo del campo de entrada */
