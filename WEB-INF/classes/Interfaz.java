@@ -11,7 +11,7 @@ public class Interfaz extends HttpServlet {
         Statement st;
         ResultSet rs;
         PrintWriter out;
-        String SQL, IdUsuario;
+        String SQL, IdUsuario, IdPartida;
         HttpSession sesion;
 
     try{
@@ -30,39 +30,47 @@ public class Interfaz extends HttpServlet {
         // Consulta SQL para obtener todas las partidas disponibles para el usuario actual
         SQL = "SELECT * FROM detallespartidas WHERE IdUsuario='" + IdUsuario + "'";
         rs = st.executeQuery(SQL);
+        
 
         // Renderizar la página HTML para mostrar las partidas disponibles
         out = res.getWriter();
         res.setContentType("text/html");
         out.println("<HTML><HEAD>");
-        out.println("<TITLE>CONECTA 4444</TITLE>");
+        out.println("<TITLE>Interfaz</TITLE>");
+        out.println("<link rel=\"stylesheet\" type=\"text/css\" href=\"css/inicio.css\">");
+
         out.println("</HEAD>");
-        out.println("<BODY>");
+        out.println("<BODY><CENTER>");
+        out.println("<BR><BR>");
+        out.println("<H1>CONECTA 4444</H1>");
 
         // Mostrar las partidas disponibles
         out.println("<h2>Tus partidas:</h2>");
         if (!rs.next()){
             out.println("No tienes ninguna partida en curso.");
         } else{
-            do{
-                out.println("<P><A HREF='Partida=" + rs.getString(2) + "'></A></P><BR>");      
+            do{ 
+                out.println("<a href='Partida?IdPartida=" + rs.getString(2) + "'>Partida " + rs.getString(2) + "</a><br>");
             }
             while (rs.next());
         }
-        // Consulta SQL para obtener todas las partidas pendientes de aceptación para el usuario actual
-            SQL = "SELECT * FROM detallespartidas GROUP BY IdPartida HAVING COUNT(IdUsuario) < 2";
-            rs = st.executeQuery(SQL);
-            out.println("<h2>Partidas pendientes de aceptación:</h2>");
-            if (!rs.next()) {
-                out.println("No tienes ninguna partida pendiente de aceptación.");
-            } else {
-                do {
-                    out.println("<A HREF='AceptarPartida?IdPartida=" + rs.getString("IdPartida") + "'>Aceptar</A>");
-                } while (rs.next());
+        rs.close();
+        // Consulta SQL para obtener todas las partidas disponibles para el usuario
+        SQL = "SELECT * FROM partidas WHERE full=0 AND IdPartida NOT IN (SELECT IdPartida FROM detallespartidas WHERE IdUsuario='" + IdUsuario + "')";
+        rs = st.executeQuery(SQL);
+        out.println("<h2>Partidas disponibles:</h2>");
+        if (!rs.next()){
+            out.println("No tienes ninguna partida disponible.");
+        } else{
+            do{
+                IdPartida = rs.getString(1);
+                out.println("<a href='Inscripcion?IdPartida=" + IdPartida + "'>Partida " + IdPartida + "</a><br>");
             }
+            while (rs.next());
+        }
         // Agregar botón para iniciar una partida contra alguien de manera aleatoria
-        out.println("<FORM METHOD='POST' ACTION='Partida'>");
-        out.println("<INPUT TYPE='SUBMIT' VALUE='BUSCAR PARTIDA'>");
+        out.println("<FORM METHOD='POST' ACTION='CrearPartida'>");
+        out.println("<INPUT TYPE='SUBMIT' VALUE='CREAR PARTIDA'>");
         out.println("</FORM>");
 
         out.println("</BODY></HTML>");

@@ -46,6 +46,35 @@
         <servlet-name>Interfaz</servlet-name>
         <url-pattern>/Interfaz</url-pattern>
     </servlet-mapping>
+    
+    <servlet>
+        <servlet-name>Partida</servlet-name>
+        <servlet-class>Partida</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>Partida</servlet-name>
+        <url-pattern>/Partida</url-pattern>
+    </servlet-mapping>
+
+        <servlet>
+        <servlet-name>CrearPartida</servlet-name>
+        <servlet-class>CrearPartida</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>CrearPartida</servlet-name>
+        <url-pattern>/CrearPartida</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>Inscripcion</servlet-name>
+        <servlet-class>Inscripcion</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>Inscripcion</servlet-name>
+        <url-pattern>/Inscripcion</url-pattern>
+    </servlet-mapping>
+
+
 
     <session-config>
         <session-timeout>

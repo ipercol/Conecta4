@@ -47,9 +47,10 @@ public class Registro extends HttpServlet {
             }
 
             // Verificar si el usuario ya existe
+            // Verificar si el usuario ya existe
             SQL = "SELECT COUNT(*) FROM usuarios WHERE usuario='" + usuario + "'";
             rs = st.executeQuery(SQL);
-            
+
             res.setContentType("text/html");
             out = res.getWriter();
             
@@ -59,10 +60,10 @@ public class Registro extends HttpServlet {
                 rs.close();
                 st.executeUpdate(SQL);
                 rs.close();
-                sesion = req.getSession();
+                
                 SQL = "SELECT IdUsuario FROM usuarios WHERE usuario='" + usuario + "'";
                 rs = st.executeQuery(SQL);
-                sesion.setAttribute("IdUsuario", rs.getString(1));
+                
                 res.sendRedirect("Inicio");
             } else {
                 // Usuario ya existe
@@ -75,7 +76,7 @@ public class Registro extends HttpServlet {
             con.close();
             out.close();
         } catch (Exception e) {
-            throw new ServletException("Error al iniciar la conexion con la base de datos",e);
+            System.err.println(e);
         } 
         }
 }
