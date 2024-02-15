@@ -68,7 +68,7 @@ public class Registro extends HttpServlet {
             } else {
                 // Usuario ya existe
                 out.println("<p>El nombre de usuario ya está en uso. Por favor, elija otro.</p>");
-                res.sendRedirect("CrearCuenta");
+                res.sendRedirect("CrearCuenta");    
                 // Puede agregar un enlace para volver al formulario de registro o simplemente redirigir
             }
             rs.close();
