@@ -51,11 +51,12 @@ public class Interfaz extends HttpServlet {
             //SQL2 = "SELECT detallespartidas.IdPartida, usuarios.IdUsuario, usuarios.usuario FROM usuarios INNER JOIN detallespartidas ON usuarios.IdUsuario = detallespartidas.IdUsuario WHERE detallespartidas
             SQL2 = "SELECT IdUsuario FROM detallespartidas WHERE IdPartida='" + rs.getString(2) + "' AND IdUsuario <> '" + IdUsuario + "'";
             rs2=st2.executeQuery(SQL2);
-            IdJugador2 = rs.getString(1);
+            
             do{ 
+                IdJugador2 = rs.getString(1);
                 out.println("<FORM ACTION='Chess' METHOD='POST'>");
                 out.println("<INPUT TYPE='hidden' NAME='IdPartida' VALUE='" + rs.getString(2) + "'>");
-                //out.println("<INPUT TYPE='hidden' NAME='IdRival' VALUE='" + IdJugador2 + "'>");
+                out.println("<INPUT TYPE='hidden' NAME='IdJugador2' VALUE='" + rs.getString(1) + "'>");
                 out.println("<BUTTON id='partidas' TYPE='Entrar'>Partida " + rs.getString(2) + "</BUTTON></FORM>");
             }
             while (rs.next());

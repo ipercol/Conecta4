@@ -10,7 +10,7 @@ public class Chess extends HttpServlet {
         Statement st, st2, st3;
         ResultSet rs, rs2, rs3;
         PrintWriter out;
-        String SQL, SQL2, SQL3, IdUsuario, IdPartida;
+        String SQL, SQL2, SQL3, IdUsuario, IdPartida, IdJugador2;
         HttpSession sesion;
         boolean turno;
         
@@ -19,12 +19,13 @@ public class Chess extends HttpServlet {
             sesion = req.getSession();
             IdUsuario = (String)sesion.getAttribute("IdUsuario");
             IdPartida = req.getParameter("IdPartida");
-            
+            IdJugador2 = req.getParameter("IdJugador2");
             
             Class.forName("com.mysql.jdbc.Driver");
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/conecta4","root","");
             st = con.createStatement();
             st2 = con.createStatement();
+            st3 = con.createStatement();
             
             res.setContentType("text/html;charset=UTF-8");
             out = res.getWriter();
@@ -41,7 +42,8 @@ public class Chess extends HttpServlet {
             SQL2 = "SELECT * FROM tablero WHERE IdUsuario=" + IdUsuario;
             rs2 = st2.executeQuery(SQL2);
             
-            
+            SQL3 = "SELECT * FROM tablero WHERE IdUsuario=" + IdJugador2;
+            rs3 = st3.executeQuery(SQL2);
             
             //Creacion del tablero:
             char [][] tablero = new char[6][7];
@@ -57,6 +59,11 @@ public class Chess extends HttpServlet {
                 tablero[fila][columna] = 'X';
             }
             
+            while (rs3.next()){
+                int columna = rs3.getInt(2);
+                int fila = rs3.getInt(3);
+                tablero[fila][columna] = 'O';
+            }
             
             out.println("<TABLE BORDER=\"1\">");
             for (int i = 0; i < 6; i++) {
@@ -76,7 +83,7 @@ public class Chess extends HttpServlet {
                         out.println("<INPUT TYPE='radio' NAME='Columna' VALUE='" + i + "'required>C" + i + "&nbsp;&nbsp;");
                     }
                     out.println("<INPUT TYPE='hidden' NAME='IdPartida' VALUE='" + IdPartida + "'>");
-                    //out.println("<INPUT TYPE='hidden' NAME='IdJugador2' VALUE='" + IdJugador2 + "'><BR>");
+                    out.println("<INPUT TYPE='hidden' NAME='IdJugador2' VALUE='" + IdJugador2 + "'><BR>");
                     out.println("<input type=\"submit\" value=\"Tiradica\">");
                     out.println("</form>");
                 }   else{
@@ -91,8 +98,10 @@ public class Chess extends HttpServlet {
             
             rs.close();
             rs2.close();
+            rs3.close();
             st.close();
             st2.close();
+            st3.close();
             con.close();
         } catch (Exception e){
             System.err.println(e);
