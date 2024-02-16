@@ -48,12 +48,12 @@
     </servlet-mapping>
     
     <servlet>
-        <servlet-name>Partida</servlet-name>
-        <servlet-class>Partida</servlet-class>
+        <servlet-name>Tablero</servlet-name>
+        <servlet-class>Tablero</servlet-class>
     </servlet>
     <servlet-mapping>
-        <servlet-name>Partida</servlet-name>
-        <url-pattern>/Partida</url-pattern>
+        <servlet-name>Tablero</servlet-name>
+        <url-pattern>/Tablero</url-pattern>
     </servlet-mapping>
 
         <servlet>

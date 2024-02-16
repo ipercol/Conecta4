@@ -37,11 +37,24 @@ public class Inscripcion extends HttpServlet {
             st.executeUpdate(SQL);
             SQL="UPDATE  detallespartidas SET turno= 0 WHERE IdPartida='" + IdPartida + "' AND IdUsuario= '" + IdUsuario + "'";
             st.executeUpdate(SQL);
-
-            res.sendRedirect("Interfaz");
+            
+            out = res.getWriter();
+            res.setContentType("text/html");
+            out.println("<HTML><HEAD>");
+            out.println("<TITLE>LOG</TITLE>");
+            out.println("<link rel=\"stylesheet\" type=\"text/css\" href=\"css/inicio.css\">");
+            out.println("</HTML><BODY><CENTER>");
+            out.println("<FORM id='redirect' ACTION='Interfaz' METHOD='POST'> </FORM>");
+            //Mediante un script hacemos que redirija directamente a la pagina del menu lanzando el formulario anterior
+            out.println("<script>");
+            out.println("window.onload = function() {");
+            out.println(" document.getElementById('redirect').submit();");
+            out.println("};");
+            out.println("</script>");
             
             con.close();
             st.close();
+            out.close();
             
         } catch (Exception e){
             System.err.println(e);

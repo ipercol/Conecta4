@@ -1,9 +1,5 @@
 #BlueJ class context
 comment0.target=Partida
 comment1.params=req\ res
-comment1.target=void\ doGet(javax.servlet.http.HttpServletRequest,\ javax.servlet.http.HttpServletResponse)
-comment2.params=req\ res
-comment2.target=void\ doPost(javax.servlet.http.HttpServletRequest,\ javax.servlet.http.HttpServletResponse)
-comment3.params=out
-comment3.target=void\ imprimirTablero(java.io.PrintWriter)
-numComments=4
+comment1.target=void\ doPost(javax.servlet.http.HttpServletRequest,\ javax.servlet.http.HttpServletResponse)
+numComments=2

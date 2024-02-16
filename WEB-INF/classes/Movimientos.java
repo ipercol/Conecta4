@@ -12,13 +12,14 @@ public class Movimientos extends HttpServlet {
         Statement st;
         ResultSet rs;
         PrintWriter out;
-        String SQL, IdUsuario;
+        String SQL, IdUsuario, IdPartida;
         HttpSession sesion;
         
         try{
             
             sesion = req.getSession();
             IdUsuario = (String)sesion.getAttribute("IdUsuario");
+            IdPartida = req.getParameter("IdPartida");
             
             
             try {
@@ -32,10 +33,6 @@ public class Movimientos extends HttpServlet {
             SQL = "INSERT INTO partidas (full) VALUES(0)";
             st.executeUpdate(SQL,Statement.RETURN_GENERATED_KEYS);
             rs = st.getGeneratedKeys();
-            String IdPartida=null;
-            if (rs.next()) {
-                IdPartida = rs.getString(1);
-            }
             
             SQL = "INSERT INTO detallespartidas (IdPartida, IdUsuario) VALUES ('" + IdPartida + "', '" + IdUsuario + "')";
 
