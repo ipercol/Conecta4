@@ -60,10 +60,8 @@ public class Registro extends HttpServlet {
                 rs.close();
                 st.executeUpdate(SQL);
                 rs.close();
-                
                 SQL = "SELECT IdUsuario FROM usuarios WHERE usuario='" + usuario + "'";
                 rs = st.executeQuery(SQL);
-                
                 res.sendRedirect("Inicio");
             } else {
                 // Usuario ya existe

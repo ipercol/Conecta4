@@ -30,13 +30,14 @@ public class Inscripcion extends HttpServlet {
                 }
             
             SQL = "UPDATE partidas SET full = 1 WHERE IdPartida='" + IdPartida + "'";
-
             st.executeUpdate(SQL);
             
             SQL = "INSERT INTO detallespartidas (IdPartida, IdUsuario) VALUES ('" + IdPartida + "', '" + IdUsuario + "')";
             st.executeUpdate(SQL);
-            SQL="UPDATE  detallespartidas SET turno = 0 WHERE IdPartida='" + IdPartida + "' AND IdUsuario= '" + IdUsuario + "'";
+
+            SQL="UPDATE  detallespartidas SET turno = 1 WHERE IdPartida='" + IdPartida + "' AND IdUsuario= '" + IdUsuario + "'";
             st.executeUpdate(SQL);
+            
             
             out = res.getWriter();
             res.setContentType("text/html");

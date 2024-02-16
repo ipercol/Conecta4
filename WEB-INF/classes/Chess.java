@@ -8,7 +8,7 @@ public class Chess extends HttpServlet {
         
         Connection con;
         Statement st, st2, st3;
-        ResultSet rs, rs2, rs3;
+        ResultSet rs, rs2 = null, rs3 = null;
         PrintWriter out;
         String SQL, SQL2, SQL3, IdUsuario, IdPartida, IdJugador2;
         HttpSession sesion;
@@ -37,12 +37,10 @@ public class Chess extends HttpServlet {
             SQL = "SELECT turno from detallespartidas WHERE IdPartida='" + IdPartida + "' AND IdUsuario='" + IdUsuario + "'";
             rs = st.executeQuery(SQL);
             
-            
-            
-            SQL2 = "SELECT * FROM tablero WHERE IdUsuario=" + IdUsuario;
+            SQL2 = "SELECT * FROM tablero WHERE IdUsuario=" + IdUsuario + " ORDER BY columna, fila";
             rs2 = st2.executeQuery(SQL2);
             
-            SQL3 = "SELECT * FROM tablero WHERE IdUsuario=" + IdJugador2;
+            SQL3 = "SELECT * FROM tablero WHERE IdUsuario=" + IdJugador2 + " ORDER BY columna, fila";
             rs3 = st3.executeQuery(SQL2);
             
             //Creacion del tablero:
@@ -53,23 +51,24 @@ public class Chess extends HttpServlet {
                 }
             }
             
+            //Turno del que crea la partida
             while (rs2.next()){
                 int columna = rs2.getInt(2);
                 int fila = rs2.getInt(3);
-                tablero[fila][columna] = 'X';
+                tablero[columna][fila] = 'X';
             }
             
+            //Turno del que se inscribe
             while (rs3.next()){
                 int columna = rs3.getInt(2);
                 int fila = rs3.getInt(3);
-                tablero[fila][columna] = 'O';
+                tablero[columna][fila] = 'O';
             }
             
             out.println("<TABLE BORDER=\"1\">");
             for (int i = 0; i < 6; i++) {
                 out.println("<TR>");
                 for (int j = 0; j < 7; j++) {
-                    //out.println("<TD WIDTH=\"50\" HEIGHT=\"50\"></TD>");
                     out.println("<TD WIDTH=\"50\" HEIGHT=\"50\"><CENTER>" + tablero[i][j] + "</CENTER></TD>");
                 }
                 out.println("</TR>");
@@ -80,8 +79,8 @@ public class Chess extends HttpServlet {
                 turno = rs.getBoolean("turno");
                 if(turno){
                     out.println("<form METHOD = 'POST' ACTION = 'Movimientos'>");
-                    for(int i = 1; i < 8; i++){
-                        out.println("<INPUT TYPE='radio' NAME='Columna' VALUE='" + i + "'required>C" + i + "&nbsp;&nbsp;");
+                    for(int i = 0; i < 7; i++){
+                        out.println("<INPUT TYPE='radio' NAME='columna' VALUE='" + i + "'required>C" + i + "&nbsp;&nbsp;");
                     }
                     out.println("<INPUT TYPE='hidden' NAME='IdPartida' VALUE='" + IdPartida + "'>");
                     out.println("<INPUT TYPE='hidden' NAME='IdJugador2' VALUE='" + IdJugador2 + "'><BR>");

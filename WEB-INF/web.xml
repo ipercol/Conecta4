@@ -93,12 +93,12 @@
     </servlet-mapping>
 
     <servlet>
-        <servlet-name>Buscarpartida</servlet-name>
-        <servlet-class>Buscarpartida</servlet-class>
+        <servlet-name>Movimientos</servlet-name>
+        <servlet-class>Movimientos</servlet-class>
     </servlet>
     <servlet-mapping>
-        <servlet-name>Buscarpartida</servlet-name>
-        <url-pattern>/Buscarpartida</url-pattern>
+        <servlet-name>Movimientos</servlet-name>
+        <url-pattern>/Movimientos</url-pattern>
     </servlet-mapping>
 
 

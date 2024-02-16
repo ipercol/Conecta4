@@ -19,6 +19,7 @@ public class CrearPartida extends HttpServlet {
             sesion = req.getSession();
             IdUsuario = (String)sesion.getAttribute("IdUsuario");
             
+            
             try {
                 Class.forName("com.mysql.jdbc.Driver");
                 con = DriverManager.getConnection("jdbc:mysql://localhost:3306/conecta4","root","");
@@ -36,9 +37,8 @@ public class CrearPartida extends HttpServlet {
             }
             
             SQL = "INSERT INTO detallespartidas (IdPartida, IdUsuario) VALUES ('" + IdPartida + "', '" + IdUsuario + "')";
-
             st.executeUpdate(SQL);
-
+            
             out = res.getWriter();
             res.setContentType("text/html");
             out.println("<HTML><HEAD>");

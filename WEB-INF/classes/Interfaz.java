@@ -79,7 +79,7 @@ public class Interfaz extends HttpServlet {
         }
         
         //BOTON CREAR PARTIDA
-        out.println("<FORM METHOD='POST' ACTION='CrearPartida'>");
+        out.println("<FORM ACTION='CrearPartida' METHOD='POST'>");
         out.println("<INPUT TYPE='SUBMIT' VALUE='CREAR PARTIDA'>");
         out.println("</FORM>");
 
