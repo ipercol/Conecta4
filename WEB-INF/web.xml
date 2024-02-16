@@ -48,12 +48,12 @@
     </servlet-mapping>
     
     <servlet>
-        <servlet-name>Tablero</servlet-name>
-        <servlet-class>Tablero</servlet-class>
+        <servlet-name>Chess</servlet-name>
+        <servlet-class>Chess</servlet-class>
     </servlet>
     <servlet-mapping>
-        <servlet-name>Tablero</servlet-name>
-        <url-pattern>/Tablero</url-pattern>
+        <servlet-name>Chess</servlet-name>
+        <url-pattern>/Chess</url-pattern>
     </servlet-mapping>
 
         <servlet>
@@ -73,6 +73,34 @@
         <servlet-name>Inscripcion</servlet-name>
         <url-pattern>/Inscripcion</url-pattern>
     </servlet-mapping>
+
+    <servlet>
+        <servlet-name>Perfil</servlet-name>
+        <servlet-class>Perfil</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>Perfil</servlet-name>
+        <url-pattern>/Perfil</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>EditarPassword</servlet-name>
+        <servlet-class>EditarPassword</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>EditarPassword</servlet-name>
+        <url-pattern>/EditarPassword</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>BuscarPartida</servlet-name>
+        <servlet-class>BuscarPartida</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>BuscarPartida</servlet-name>
+        <url-pattern>/BuscarPartida</url-pattern>
+    </servlet-mapping>
+
 
 
 

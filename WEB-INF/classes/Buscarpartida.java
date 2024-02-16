@@ -3,10 +3,9 @@ import java.sql.*;
 import javax.servlet.*;
 import javax.servlet.http.*;
 
-public class Interfaz extends HttpServlet {
+public class Buscarpartida extends HttpServlet {
     public void doPost(HttpServletRequest req, HttpServletResponse res)
             throws ServletException, IOException {
-        
         Connection con;
         Statement st,st2;
         ResultSet rs,rs2 = null;
@@ -27,7 +26,13 @@ public class Interfaz extends HttpServlet {
         } catch (ClassNotFoundException | SQLException e) {
             throw new ServletException("Error al conectar con la base de datos", e);
         }
+        
+        // Consulta SQL para obtener todas las partidas disponibles para el usuario actual
+        SQL = "SELECT * FROM detallespartidas WHERE IdUsuario='" + IdUsuario + "'";
+        rs = st.executeQuery(SQL);
+        
 
+        // Renderizar la página HTML para mostrar las partidas disponibles
         out = res.getWriter();
         res.setContentType("text/html");
         out.println("<HTML><HEAD>");
@@ -39,29 +44,10 @@ public class Interfaz extends HttpServlet {
         out.println("<BR><BR>");
         out.println("<H1>CONECTA 4444</H1>");
         
-        // Consulta SQL para obtener todas las partidas disponibles para el usuario actual
-        SQL = "SELECT * FROM detallespartidas WHERE IdUsuario='" + IdUsuario + "'";
-        rs = st.executeQuery(SQL);
-
-        // Mostrar las partidas disponibles
-        out.println("<h2>Tus partidas:</h2>");
-        if (!rs.next()){
-            out.println("No tienes ninguna partida en curso.");
-        } else{
-            //SQL2 = "SELECT detallespartidas.IdPartida, usuarios.IdUsuario, usuarios.usuario FROM usuarios INNER JOIN detallespartidas ON usuarios.IdUsuario = detallespartidas.IdUsuario WHERE detallespartidas
-            SQL2 = "SELECT IdUsuario FROM detallespartidas WHERE IdPartida='" + rs.getString(2) + "' AND IdUsuario <> '" + IdUsuario + "'";
-            rs2=st2.executeQuery(SQL2);
-            IdJugador2 = rs.getString(1);
-            do{ 
-                out.println("<FORM ACTION='Chess' METHOD='POST'>");
-                out.println("<INPUT TYPE='hidden' NAME='IdPartida' VALUE='" + rs.getString(2) + "'>");
-                //out.println("<INPUT TYPE='hidden' NAME='IdRival' VALUE='" + IdJugador2 + "'>");
-                out.println("<BUTTON id='partidas' TYPE='Entrar'>Partida " + rs.getString(2) + "</BUTTON></FORM>");
-            }
-            while (rs.next());
-        }
-        rs.close();
-        
+        //Boton Perfil
+        out.println("<FORM METHOD = 'POST' ACTION = 'Perfil'>");
+        out.println("<INPUT TYPE='SUBMIT' VALUE='Ver Perfil'>");
+        out.println("</FORM>");
         
         // Consulta SQL para obtener todas las partidas disponibles para el usuario
         SQL = "SELECT * FROM partidas WHERE full=0 AND IdPartida NOT IN (SELECT IdPartida FROM detallespartidas WHERE IdUsuario='" + IdUsuario + "')";
@@ -76,16 +62,14 @@ public class Interfaz extends HttpServlet {
             }
             while (rs.next());
         }
-        
-        //BOTON CREAR PARTIDA
+        rs.close();
+        // Agregar botón para iniciar una partida contra alguien de manera aleatoria
         out.println("<FORM METHOD='POST' ACTION='CrearPartida'>");
         out.println("<INPUT TYPE='SUBMIT' VALUE='CREAR PARTIDA'>");
         out.println("</FORM>");
 
         out.println("</BODY></HTML>");
         
-        rs.close();
-        rs2.close();
         st.close();
         st2.close();
         out.close();
