@@ -1,6 +1,4 @@
 import java.io.*;
-//En este servlet se crean partidas sin contrincante. Servira para que la gente se inscriba a ellas si quiere jugar.
-import java.io.*;
 import javax.servlet.*;
 import javax.servlet.http.*;
 import java.sql.*;
@@ -9,46 +7,13 @@ public class Movimientos extends HttpServlet {
             throws ServletException, IOException {
         
         Connection con;
-        Statement st;
-        ResultSet rs;
+        Statement st, st2, st3;
+        ResultSet rs, rs2, rs3;
         PrintWriter out;
-        String SQL, IdUsuario, IdPartida;
+        String SQL, SQL2, SQL3, IdUsuario, IdPartida, IdJugador2;
         HttpSession sesion;
+        boolean turno;
         
-        try{
-            
-            sesion = req.getSession();
-            IdUsuario = (String)sesion.getAttribute("IdUsuario");
-            IdPartida = req.getParameter("IdPartida");
-            
-            
-            try {
-                Class.forName("com.mysql.jdbc.Driver");
-                con = DriverManager.getConnection("jdbc:mysql://localhost:3306/conecta4","root","");
-                st = con.createStatement();
-                } catch (ClassNotFoundException | SQLException e) {
-                throw new ServletException("Error al conectar con la base de datos", e);
-                }
-            
-            SQL = "INSERT INTO partidas (full) VALUES(0)";
-            st.executeUpdate(SQL,Statement.RETURN_GENERATED_KEYS);
-            rs = st.getGeneratedKeys();
-            
-            SQL = "INSERT INTO detallespartidas (IdPartida, IdUsuario) VALUES ('" + IdPartida + "', '" + IdUsuario + "')";
-
-            st.executeUpdate(SQL);
-
-            res.sendRedirect("Interfaz"); //CAMBIAR
-            con.close();
-            st.close();
-            rs.close();
-            
-            
-            
-            
-            
-        } catch (Exception e){
-            System.err.println(e);
-        }
+    
     }
 }

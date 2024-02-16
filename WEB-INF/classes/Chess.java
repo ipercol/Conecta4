@@ -69,7 +69,8 @@ public class Chess extends HttpServlet {
             for (int i = 0; i < 6; i++) {
                 out.println("<TR>");
                 for (int j = 0; j < 7; j++) {
-                    out.println("<TD WIDTH=\"50\" HEIGHT=\"50\"></TD>");
+                    //out.println("<TD WIDTH=\"50\" HEIGHT=\"50\"></TD>");
+                    out.println("<TD WIDTH=\"50\" HEIGHT=\"50\"><CENTER>" + tablero[i][j] + "</CENTER></TD>");
                 }
                 out.println("</TR>");
             }
