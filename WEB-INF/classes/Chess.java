@@ -38,6 +38,16 @@ public class Chess extends HttpServlet {
             } else{
                 out.println("Jugador 1: " + IdUsuario + "Jugador 2:" + IdJugador2);
             }
+            
+            SQL2 = "SELECT MAX(tirada) FROM tablero WHERE IdPartida='" + IdPartida + "'";
+            rs2 = st.executeQuery(SQL2);
+            if (rs2.next()){
+                out.println("Movimiento :" + rs2.getInt(1));
+            } else {
+                out.println("No hay datos");
+            }
+            
+            
             SQL = "SELECT turno from detallespartidas WHERE IdPartida='" + IdPartida + "' AND IdUsuario='" + IdUsuario + "'";
             rs = st.executeQuery(SQL);
             
@@ -96,6 +106,7 @@ public class Chess extends HttpServlet {
             } else{
                 out.println("No se ha podido determinar de quien es el turno. Consulta fallida o nula");
             }
+            
             
             
             out.println("</BODY></HTML>");

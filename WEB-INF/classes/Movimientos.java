@@ -24,34 +24,73 @@ public class Movimientos extends HttpServlet {
             Class.forName("com.mysql.jdbc.Driver");
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/conecta4","root","");
             st = con.createStatement();
-        
+            st2 = con.createStatement();
+            
             res.setContentType("text/html;charset=UTF-8");
             out = res.getWriter();
             
-            //SQL2 = "INSERT INTO tablero (IdPartida, columna, fila, IdUsuario) VALUES ('" + IdPartida + "', '" + columna + "', '" + fila + "', '" + IdUsuario + "')";
-            //st.executeUpdate(SQL2);
+            out.println("<HTML><BODY>");
             
             
-            SQL = "SELECT MAX(fila) FROM tablero WHERE IdPartida='" + IdPartida + "' AND columna='" + columna + "'"; 
+            SQL = "SELECT MIN(fila) FROM tablero WHERE IdPartida='" + IdPartida + "' AND columna='" + columna + "'"; 
             rs = st.executeQuery(SQL);
             fila = 5;
-            // Si no hay registros, establecer el valor inicial de "fila" en 0
-            if (!rs.next()) {
-                fila = fila;
-            } else {
-                fila = fila; // Obtener el valor máximo de "fila"
+            
+            while (rs.next()){
+                                while (rs.getInt(1) > 0){
+                                
+                                fila = rs.getInt(1) - 1 ;
+                                
+                                
+                                SQL2 = "INSERT INTO tablero (IdPartida, columna, fila, IdUsuario) VALUES ('" + IdPartida + "', '" + columna + "', '" + fila + "', '" + IdUsuario + "')";
+                                st.executeUpdate(SQL2);
+                                
+                                
+                                
+                                SQL2 = "UPDATE detallespartidas SET turno = 0 WHERE IdPartida='" + IdPartida + "' AND IdUsuario= '" + IdUsuario + "'";
+                                SQL3 = "UPDATE detallespartidas SET turno = 1 WHERE IdPartida='" + IdPartida + "' AND IdUsuario= '" + IdJugador2 + "'"; 
+                                con.setAutoCommit(false);
+                                
+                                st.executeUpdate(SQL2);
+                                st.executeUpdate(SQL3);
+                                
+                                con.commit();
+                                con.setAutoCommit(true);
+                                //NOS VAMOS
+                                out.println("<FORM id='redirect' ACTION='Chess' METHOD='POST'>");
+                                out.println("<INPUT TYPE='hidden' NAME='IdPartida' VALUE='" + IdPartida + "'>");
+                                out.println("<INPUT TYPE='hidden' NAME='IdJugador2' VALUE='" + IdJugador2 + "'>");
+                                out.println("</FORM>");
+                                out.println("<script>");
+                                out.println("window.onload = function() {");
+                                out.println(" document.getElementById('redirect').submit();");
+                                out.println("};");
+                                out.println("</script>");
+                                
+                            }
+                                out.println("<FORM id='redirect' ACTION='Chess' METHOD='POST'>");
+                                out.println("<INPUT TYPE='hidden' NAME='IdPartida' VALUE='" + IdPartida + "'>");
+                                out.println("<INPUT TYPE='hidden' NAME='IdJugador2' VALUE='" + IdJugador2 + "'>");
+                                out.println("</FORM>");
+                                out.println("<script>");
+                                out.println("window.onload = function() {");
+                                out.println(" document.getElementById('redirect').submit();");
+                                out.println("};");
+                                out.println("</script>");
+                            
+                        
+                        
             }
             
-                if (rs.getInt(1) > 0){
-                    fila = rs.getInt(1) -1 ;
+            while (!rs.next()){
+                    fila = fila ;
                     SQL2 = "INSERT INTO tablero (IdPartida, columna, fila, IdUsuario) VALUES ('" + IdPartida + "', '" + columna + "', '" + fila + "', '" + IdUsuario + "')";
                     st.executeUpdate(SQL2);
                     
                     
-                    SQL2 = "UPDATE detallespartidas SET turno = 0 WHERE IdPartida='" + IdPartida + "' AND IdUsuario= '" + IdUsuario + "'"; 
+                    SQL2 = "UPDATE  detallespartidas SET turno = 0 WHERE IdPartida='" + IdPartida + "' AND IdUsuario= '" + IdUsuario + "'"; 
+                    SQL3 = "UPDATE  detallespartidas SET turno = 1 WHERE IdPartida='" + IdPartida + "' AND IdUsuario= '" + IdJugador2 + "'"; 
                     
-                    
-                    SQL3 = "UPDATE detallespartidas SET turno = 1 WHERE IdPartida='" + IdPartida + "' AND IdUsuario= '" + IdJugador2 + "'"; 
                     con.setAutoCommit(false);
                     
                     st.executeUpdate(SQL2);
@@ -59,40 +98,21 @@ public class Movimientos extends HttpServlet {
                     
                     con.commit();
                     con.setAutoCommit(true);
-                    //NOS VAMOS
-                    out.println("<FORM id='redirect' ACTION='Chess' METHOD='POST'> </FORM>");
-                    out.println("<script>");
-                    out.println("window.onload = function() {");
-                    out.println(" document.getElementById('redirect').submit();");
-                    out.println("};");
-                    out.println("</script>");
-                } else{
-                    fila = fila ;
-                    SQL2 = "INSERT INTO tablero (IdPartida, columna, fila, IdUsuario) VALUES ('" + IdPartida + "', '" + columna + "', '" + fila + "', '" + IdUsuario + "')";
-                    st.executeUpdate(SQL2);
-                    
-                    SQL2 = "UPDATE  detallespartidas SET turno = 0 WHERE IdPartida='" + IdPartida + "' AND IdUsuario= '" + IdUsuario + "'"; 
-                    st.executeUpdate(SQL2);
-                    
-                    SQL2 = "UPDATE  detallespartidas SET turno = 1 WHERE IdPartida='" + IdPartida + "' AND IdUsuario= '" + IdJugador2 + "'"; 
-                    st.executeUpdate(SQL2);
                     
                     //NOS VAMOS
-                    out.println("<FORM id='redirect' ACTION='Chess' METHOD='POST'> </FORM>");
+                    out.println("<FORM id='redirect' ACTION='Chess' METHOD='POST'>");
+                    out.println("<INPUT TYPE='hidden' NAME='IdPartida' VALUE='" + IdPartida + "'>");
+                    out.println("<INPUT TYPE='hidden' NAME='IdJugador2' VALUE='" + IdJugador2 + "'>");
+                    out.println("</FORM>");
                     out.println("<script>");
                     out.println("window.onload = function() {");
                     out.println(" document.getElementById('redirect').submit();");
                     out.println("};");
                     out.println("</script>");
-                    /*out.println("<FORM id='redirect' ACTION='Chess' METHOD='POST'> </FORM>");
-                    out.println("<script>");
-                    out.println("window.onload = function() {");
-                    out.println(" document.getElementById('redirect').submit();");
-                    out.println("};");
-                    out.println("</script>");
-                    */
-                }
-                        
+                  
+            }
+            
+            out.println("</HTML></BODY>");
             
             rs.close();
             st.close();
