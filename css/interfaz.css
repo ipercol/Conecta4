@@ -1,0 +1,114 @@
+/* Estilos generales */
+html{  
+    background-image: url("arcademachine.jpg");
+    background-size: cover; /* Ajusta el tamaño de la imagen para cubrir toda la pantalla */
+}
+
+@keyframes neon {
+    0% { color: #cdbf08; text-shadow: none; } 
+    25% { color: #fff; text-shadow: 0 0 2px #fff, 0 0 4px #fff, 0 0 6px #fff, 0 0 10px #cdbf08, 0 0 5px #cdbf08, 0 0 8px #cdbf08, 0 0 10px #cdbf08; } /* Efecto del neón */
+    35% { color: #cdbf08; text-shadow: none; } 
+    45% { color: #fff; text-shadow: 0 0 2px #fff, 0 0 4px #fff, 0 0 6px #fff, 0 0 10px #cdbf08, 0 0 5px #cdbf08, 0 0 8px #cdbf08, 0 0 10px #cdbf08; } 
+    100% { color: #cdbf08; text-shadow: none; }
+}
+
+/* Estilos para el título */
+h1 {
+    font-family:"PacFont";
+    font-size: 100px;
+    animation: neon 6s infinite alternate;
+}
+
+/* Estilos para los formularios */
+form {
+    margin: 20px auto; /* Centra el formulario en la página */
+    width: 300px; /* Ancho del formulario */
+}
+
+
+
+/* Estilos para los campos de entrada */
+input[type="text"], input[type="password"], input[type="submit"] {
+    font-family:"Neon Retro - Demo Version";
+    padding: 10px; /* Añade espacio alrededor del contenido del campo de entrada */
+    margin-bottom: 10px; /* Añade espacio entre campos de entrada */
+    width: 100%; /* Ancho completo del campo de entrada */
+    border: 1px solid #ccc; /* Añade un borde alrededor del campo de entrada */
+    border-radius: 5px; /* Añade bordes redondeados al campo de entrada */
+}
+
+input[type="submit"] {
+    background-color: #3f065a; /* Cambia el color de fondo del botón */
+    color: #fff; /* Cambia el color del texto del botón */
+    border: none; /* Elimina el borde del botón */
+    cursor: pointer; /* Cambia el cursor al pasar sobre el botón */
+    transition: background-color 0.5s, box-shadow 0.5s, color 0.7s; /* Agrega una transición suave */
+}
+
+/* Estilos para los botones cuando se pasa el ratón por encima */
+input[type="submit"]:hover {
+    background-color: #b3a506; /* Cambia el color de fondo del botón cuando se pasa el ratón por encima */
+    box-shadow: 0px 0px 10px 4px rgba(227, 225, 224, 0.87); /* Agrega un borde sombreado cuando el ratón está encima */
+    color:rgb(0, 0, 0);
+}
+
+
+/*ENCABEZADO*/
+#header {
+    background-color: #cab4783b;
+    padding: 10px 0;
+    text-align: center;
+}
+
+#header h1 {
+    margin: 7;
+}
+
+#header form {
+    position: absolute;
+    top: 10px;
+    right: 30px;
+}
+
+
+/*PERFIL */
+#perfil {
+    background-color: transparent;
+    border: none;
+    color: #fff;
+    font-size: 16px;
+    font-family: Arial, sans-serif;
+    cursor: pointer;
+    padding: 5px 10px;
+    margin: 0; /* Añadir para eliminar el margen predeterminado */
+     width: 100px; /* Ajusta el ancho del botón */
+    height: 100px; /* Ajusta la altura del botón */
+    border-radius: 90px; /* Añade bordes redondeados */
+    display: inline-block; /* Asegura que el tamaño se respete */
+    text-align: center; /* Centra el texto horizontalmente */
+    line-height: 0px; /* Centra el texto verticalmente */
+    transition: background-color 0.5s, box-shadow 0.5s, color 0.7s;
+}
+/* Estilos para el botón con id 'perfil' cuando se pasa el ratón sobre él */
+#perfil:hover {
+    background-color: #b3a506; /* Cambia el color de fondo cuando se pasa el ratón sobre el botón */
+    color: #000; /* Cambia el color del texto cuando se pasa el ratón sobre el botón */
+    box-shadow: 0px 0px 10px 4px rgba(227, 225, 224, 0.87);
+}
+#interfaz {
+    font-size: 24px;  
+}
+
+
+/* Estilos para las partidas */
+#partidas-container {
+    background-color: #ffffff34;
+    border-radius: 8px;
+    padding: 0px;
+    margin-top: 20px;
+}
+
+#partidas-container h2 {
+    margin-top: 0;
+}
+

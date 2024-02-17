@@ -1,0 +1,77 @@
+/* Estilos para el cuerpo */
+html{  
+    background-image: url("badlandscity.jpg");
+    background-size: 1500px; /* Ajusta el tamaño de la imagen para cubrir toda la pantalla */
+    }
+
+    @keyframes neon {
+        0% { color: #cdbf08; text-shadow: none; } 
+        25% { color: #fff; text-shadow: 0 0 2px #fff, 0 0 4px #fff, 0 0 6px #fff, 0 0 10px #cdbf08, 0 0 5px #cdbf08, 0 0 8px #cdbf08, 0 0 10px #cdbf08; } /* Efecto del neón */
+        35% { color: #cdbf08; text-shadow: none; } 
+        45% { color: #fff; text-shadow: 0 0 2px #fff, 0 0 4px #fff, 0 0 6px #fff, 0 0 10px #cdbf08, 0 0 5px #cdbf08, 0 0 8px #cdbf08, 0 0 10px #cdbf08; } 
+        100% { color: #cdbf08; text-shadow: none; }
+        }
+    h1 {
+        font-family:"PacFont";
+        font-size: 100px;
+        animation: neon 6s infinite alternate;
+    }
+/* Estilos para el título */
+
+
+/* Estilos para los párrafos */
+p {
+    color: #dbdbdb;
+}
+
+/* Estilos para los formularios */
+form {
+    margin: 20px auto; /* Centra el formulario en la página */
+    width: 300px; /* Ancho del formulario */
+}
+
+label[for="newPassword"] {
+    font-family: "Neon Retro - Demo Version";
+    color: #ffffff; /* Color deseado para las etiquetas de contraseña */
+}
+
+input[type="PASSWORD"], input[type="submit"] {
+    font-family:"Neon Retro - Demo Version";
+    padding: 10px; /* Añade espacio alrededor del contenido del campo de entrada */
+    margin-bottom: 10px; /* Añade espacio entre campos de entrada */
+    width: 100%; /* Ancho completo del campo de entrada */
+    border: 1px solid #ccc; /* Añade un borde alrededor del campo de entrada */
+    border-radius: 5px; /* Añade bordes redondeados al campo de entrada */
+}
+
+/* Estilos para los botones */
+input[type="submit"] {
+    background-color: #6a0dad; /* Color de fondo morado */
+    color: #fff; /* Color del texto blanco */
+    border: none; /* Sin borde */
+    padding: 10px 30px; /* Ajusta el espaciado interno del botón */
+    font-size: 15px; /* Tamaño de fuente */
+    cursor: pointer; /* Cambia el cursor al pasar sobre el botón */
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.3), 0 8px 16px rgba(0, 0, 0, 0.2), inset 0 0 10px rgba(0, 0, 0, 0.2); /* Efecto de relieve */
+    transition: background-color 0.5s, box-shadow 0.5s, color 0.7s, transform 0.2s; /* Transiciones suaves */
+    border-radius: 10px; /* Bordes redondeados */
+    margin: 10px; /* Añade espacio entre los botones */
+    border: 2px solid #530a8b; /* Borde sólido */
+}
+
+input[type="submit"]:hover {
+    background-color: #530a8b; /* Cambia el color de fondo al pasar el ratón */
+    background-color: #b3a506; /* Cambia el color de fondo del botón cuando se pasa el ratón por encima */
+    box-shadow: 0px 0px 10px 4px rgba(227, 225, 224, 0.87), 0 4px 8px rgba(0, 0, 0, 0.3), inset 0 0 10px rgba(0, 0, 0, 0.3); /* Efecto de relieve al pasar el ratón */
+
+}
+
+input[type="submit"]:active {
+    transform: translateY(2px); /* Simula la presión al pulsar el botón */
+}
+
+.perfil-info {
+    font-family: "Neon Retro - Demo Version"; /* Cambia la fuente */
+    font-size: 35px; /* Tamaño de fuente */
+    color: #b3a506; /* Color de texto */
+}

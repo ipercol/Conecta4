@@ -23,32 +23,37 @@ public class Perfil extends HttpServlet {
                 throw new ServletException("Error al conectar con la base de datos", e);
             }
             PrintWriter out = res.getWriter();
-            SQL = "SELECT victorias, derrotas FROM usuarios WHERE IdUsuario = '" + idUsuario + "'";
+            SQL = "SELECT * FROM usuarios WHERE IdUsuario = '" + idUsuario + "'";
             rs = st.executeQuery(SQL);
             
             out.println("<HTML><HEAD>");
-            out.println("<TITLE>Editar Cuenta</TITLE>");
+            out.println("<link rel=\"stylesheet\" type=\"text/css\" href=\"css/perfil.css\">");
             out.println("</HEAD>");
             out.println("<BODY><CENTER>");
             out.println("<BR><BR>");
             out.println("<H1>Perfil</H1>");
-
-        // Formulario para cambiar la contraseña
+            out.println("<BR><BR>");
+            
+            
+            
+            if (rs.next()) {
+                
+                int victorias = rs.getInt(4);
+                int derrotas = rs.getInt(5);
+                
+                out.println("<p class='perfil-info'>Usuario:   " + rs.getString(2) + "</p><BR><BR>");
+                out.println("<p class='perfil-info'>Victorias:    " + victorias + "</p><BR><BR>");
+                out.println("<p class='perfil-info'>Derrotas:    " + derrotas + "</p><BR><BR>");
+            } else {
+                out.println("<p>No se encontró información del perfil.</p>");
+            }
+            
+            // Formulario para cambiar la contraseña
             out.println("<FORM METHOD='POST' ACTION='EditarPassword'>");
             out.println("<LABEL for=newPassword>Nueva Contraseña:</LABEL><BR>");
             out.println("<INPUT TYPE=PASSWORD id=newPassword NAME=newPassword><BR><BR>");
             out.println("<INPUT TYPE=SUBMIT VALUE='Cambiar Contraseña'><BR>");
             out.println("</FORM>");
-            
-            if (rs.next()) {
-                int victorias = rs.getInt("victorias");
-                int derrotas = rs.getInt("derrotas");
-
-                out.println("<p>Victorias: " + victorias + "</p>");
-                out.println("<p>Derrotas: " + derrotas + "</p>");
-            } else {
-                out.println("<p>No se encontró información del perfil.</p>");
-            }
             
             out.println("</BODY></HTML>");
             out.close();

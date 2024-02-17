@@ -101,6 +101,14 @@
         <url-pattern>/Movimientos</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+        <servlet-name>BuscarPartida</servlet-name>
+        <servlet-class>BuscarPartida</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>BuscarPartida</servlet-name>
+        <url-pattern>/BuscarPartida</url-pattern>
+    </servlet-mapping>
 
 
 

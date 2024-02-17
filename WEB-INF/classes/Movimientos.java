@@ -34,22 +34,40 @@ public class Movimientos extends HttpServlet {
             
             SQL = "SELECT MAX(fila) FROM tablero WHERE IdPartida='" + IdPartida + "' AND columna='" + columna + "'"; 
             rs = st.executeQuery(SQL);
+            fila = 5;
             // Si no hay registros, establecer el valor inicial de "fila" en 0
             if (!rs.next()) {
-                fila = 0;
+                fila = fila;
             } else {
-                fila = rs.getInt(1); // Obtener el valor máximo de "fila"
+                fila = fila; // Obtener el valor máximo de "fila"
             }
             
-                if (fila == 6){
+                if (rs.getInt(1) > 0){
+                    fila = rs.getInt(1) -1 ;
+                    SQL2 = "INSERT INTO tablero (IdPartida, columna, fila, IdUsuario) VALUES ('" + IdPartida + "', '" + columna + "', '" + fila + "', '" + IdUsuario + "')";
+                    st.executeUpdate(SQL2);
+                    
+                    
+                    SQL2 = "UPDATE detallespartidas SET turno = 0 WHERE IdPartida='" + IdPartida + "' AND IdUsuario= '" + IdUsuario + "'"; 
+                    
+                    
+                    SQL3 = "UPDATE detallespartidas SET turno = 1 WHERE IdPartida='" + IdPartida + "' AND IdUsuario= '" + IdJugador2 + "'"; 
+                    con.setAutoCommit(false);
+                    
+                    st.executeUpdate(SQL2);
+                    st.executeUpdate(SQL3);
+                    
+                    con.commit();
+                    con.setAutoCommit(true);
+                    //NOS VAMOS
                     out.println("<FORM id='redirect' ACTION='Chess' METHOD='POST'> </FORM>");
                     out.println("<script>");
                     out.println("window.onload = function() {");
                     out.println(" document.getElementById('redirect').submit();");
                     out.println("};");
-                    out.println("</script>"); 
+                    out.println("</script>");
                 } else{
-                    fila = fila + 1;
+                    fila = fila ;
                     SQL2 = "INSERT INTO tablero (IdPartida, columna, fila, IdUsuario) VALUES ('" + IdPartida + "', '" + columna + "', '" + fila + "', '" + IdUsuario + "')";
                     st.executeUpdate(SQL2);
                     
@@ -58,6 +76,7 @@ public class Movimientos extends HttpServlet {
                     
                     SQL2 = "UPDATE  detallespartidas SET turno = 1 WHERE IdPartida='" + IdPartida + "' AND IdUsuario= '" + IdJugador2 + "'"; 
                     st.executeUpdate(SQL2);
+                    
                     //NOS VAMOS
                     out.println("<FORM id='redirect' ACTION='Chess' METHOD='POST'> </FORM>");
                     out.println("<script>");
@@ -65,6 +84,13 @@ public class Movimientos extends HttpServlet {
                     out.println(" document.getElementById('redirect').submit();");
                     out.println("};");
                     out.println("</script>");
+                    /*out.println("<FORM id='redirect' ACTION='Chess' METHOD='POST'> </FORM>");
+                    out.println("<script>");
+                    out.println("window.onload = function() {");
+                    out.println(" document.getElementById('redirect').submit();");
+                    out.println("};");
+                    out.println("</script>");
+                    */
                 }
                         
             

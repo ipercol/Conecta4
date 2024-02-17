@@ -3,7 +3,7 @@ import java.sql.*;
 import javax.servlet.*;
 import javax.servlet.http.*;
 
-public class Buscarpartida extends HttpServlet {
+public class BuscarPartida extends HttpServlet {
     public void doPost(HttpServletRequest req, HttpServletResponse res)
             throws ServletException, IOException {
         Connection con;
@@ -26,10 +26,6 @@ public class Buscarpartida extends HttpServlet {
         } catch (ClassNotFoundException | SQLException e) {
             throw new ServletException("Error al conectar con la base de datos", e);
         }
-        
-        // Consulta SQL para obtener todas las partidas disponibles para el usuario actual
-        SQL = "SELECT * FROM detallespartidas WHERE IdUsuario='" + IdUsuario + "'";
-        rs = st.executeQuery(SQL);
         
 
         // Renderizar la página HTML para mostrar las partidas disponibles
@@ -63,10 +59,6 @@ public class Buscarpartida extends HttpServlet {
             while (rs.next());
         }
         rs.close();
-        // Agregar botón para iniciar una partida contra alguien de manera aleatoria
-        out.println("<FORM METHOD='POST' ACTION='CrearPartida'>");
-        out.println("<INPUT TYPE='SUBMIT' VALUE='CREAR PARTIDA'>");
-        out.println("</FORM>");
 
         out.println("</BODY></HTML>");
         

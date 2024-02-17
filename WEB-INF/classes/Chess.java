@@ -33,15 +33,19 @@ public class Chess extends HttpServlet {
             out.println("<HTML><HEAD>");
             out.println("<TITLE>Crear Partida</TITLE>");
             out.println("<CENTER>");
-            
+            if (IdUsuario == null || IdJugador2 == null){
+                out.println("patatas");
+            } else{
+                out.println("Jugador 1: " + IdUsuario + "Jugador 2:" + IdJugador2);
+            }
             SQL = "SELECT turno from detallespartidas WHERE IdPartida='" + IdPartida + "' AND IdUsuario='" + IdUsuario + "'";
             rs = st.executeQuery(SQL);
             
-            SQL2 = "SELECT * FROM tablero WHERE IdUsuario=" + IdUsuario + " ORDER BY columna, fila";
+            SQL2 = "SELECT * FROM tablero WHERE IdUsuario=" + IdUsuario + " AND IdPartida=" + IdPartida + " ORDER BY columna, fila";
             rs2 = st2.executeQuery(SQL2);
             
-            SQL3 = "SELECT * FROM tablero WHERE IdUsuario=" + IdJugador2 + " ORDER BY columna, fila";
-            rs3 = st3.executeQuery(SQL2);
+            SQL3 = "SELECT * FROM tablero WHERE IdUsuario=" + IdJugador2 + " AND IdPartida=" + IdPartida + " ORDER BY columna, fila";
+            rs3 = st3.executeQuery(SQL3);
             
             //Creacion del tablero:
             char [][] tablero = new char[6][7];
@@ -55,14 +59,14 @@ public class Chess extends HttpServlet {
             while (rs2.next()){
                 int columna = rs2.getInt(2);
                 int fila = rs2.getInt(3);
-                tablero[columna][fila] = 'X';
+                tablero[fila][columna] = 'X';
             }
             
             //Turno del que se inscribe
             while (rs3.next()){
                 int columna = rs3.getInt(2);
                 int fila = rs3.getInt(3);
-                tablero[columna][fila] = 'O';
+                tablero[fila][columna] = 'O';
             }
             
             out.println("<TABLE BORDER=\"1\">");

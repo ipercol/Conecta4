@@ -26,18 +26,19 @@ public class EditarPassword extends HttpServlet {
 
         // Obtener la nueva contraseña del formulario
         String newPassword = req.getParameter("newPassword");
-         if (newPassword == null || newPassword.isEmpty()) {
-                res.sendRedirect("CrearCuenta");
+        if (newPassword == null || newPassword.isEmpty()) {
+                res.sendRedirect("Perfil");
                 throw new ServletException("El nombre de usuario y la contraseña son obligatorios.");
-            }
-           try{
+        }
+        
+        try{
                 MessageDigest digest = MessageDigest.getInstance("SHA-512");
                 digest.reset();
                 digest.update(newPassword.getBytes("utf8"));
                 newPassword = String.format("%0128x", new BigInteger(1, digest.digest()));
                 } catch (NoSuchAlgorithmException | UnsupportedEncodingException e){
                    e.printStackTrace(); 
-                }
+        }
 
         // Obtener el ID del usuario de la sesión
         HttpSession sesion = req.getSession();
@@ -55,13 +56,13 @@ public class EditarPassword extends HttpServlet {
         
          
         // Redirigir al usuario a una página después de cambiar la contraseña
-        out.println("<FORM id='redirect' ACTION='Interfaz' METHOD='POST'> </FORM>");
-                //Mediante un script hacemos que redirija directamente a la pagina del menu lanzando el formulario anterior
-                out.println("<script>");
-                out.println("window.onload = function() {");
-                out.println(" document.getElementById('redirect').submit();");
-                out.println("};");
-                out.println("</script>");
+        out.println("<FORM id='redirect' ACTION='Inicio' METHOD='POST'> </FORM>");
+        //Mediante un script hacemos que redirija directamente a la pagina del menu lanzando el formulario anterior
+        out.println("<script>");
+        out.println("window.onload = function() {");
+        out.println(" document.getElementById('redirect').submit();");
+        out.println("};");
+        out.println("</script>");
 
         out.println("</BODY></HTML>");
         out.close();

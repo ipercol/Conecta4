@@ -25,7 +25,7 @@ public class Inicio extends HttpServlet {
         out.println("<INPUT TYPE=TEXT id=usuario NAME=usuario VALUE=\"\"><BR>");
         
         out.println("<LABEL for=password>Contraseña:</LABEL><BR>");
-        out.println("<INPUT TYPE=TEXT id=password NAME=password><BR><BR>");
+        out.println("<INPUT TYPE=PASSWORD id=password NAME=password><BR><BR>");
         
         out.println("<INPUT TYPE=SUBMIT VALUE=LOGIN><BR>");
         out.println("</FORM>");
