@@ -3,7 +3,7 @@ import javax.servlet.*;
 import javax.servlet.http.*;
 import javax.servlet.ServletException.*;
 
-public class CrearCuenta extends HttpServlet {
+public class CambioCuenta extends HttpServlet {
 
     public void doPost(HttpServletRequest req, HttpServletResponse res)
             throws ServletException, IOException {
@@ -19,21 +19,15 @@ public class CrearCuenta extends HttpServlet {
         out.println("<BODY><CENTER>");
         out.println("<BR><BR>");
         out.println("<H1>CONECTA 4</H1>");
-        out.println("<FORM METHOD=POST ACTION=Registro>");
+        out.println("<FORM METHOD=POST ACTION=EditarPerfil>");
         
-        out.println("<LABEL for=usuario>Usuario:</LABEL><BR>");
-        out.println("<INPUT TYPE=TEXT id=usuario NAME=usuario VALUE=\"\"><BR>");
+        out.println("<LABEL for=newPassword>Nueva password:</LABEL><BR>");
+        out.println("<INPUT TYPE=PASSWORD id=newPassword NAME=newPassword><BR><BR>");
         
-        out.println("<LABEL for=password>Password:</LABEL><BR>");
-        out.println("<INPUT TYPE=PASSWORD id=password NAME=password><BR><BR>");
+        out.println("<LABEL for=newPassword2>Confirmar nueva password:</LABEL><BR>");
+        out.println("<INPUT TYPE=PASSWORD id=newPassword2 NAME=newPassword2><BR><BR>");
         
-        out.println("<LABEL for=correo>Correo electrónico:</LABEL><BR>");
-        out.println("<INPUT TYPE=TEXT id=correo NAME=correo><BR>");
-        
-        out.println("<LABEL for=telefono>Teléfono:</LABEL><BR>");
-        out.println("<INPUT TYPE=TEXT id=telefono NAME=telefono><BR>");
-        
-        out.println("<INPUT TYPE=SUBMIT VALUE='CREAR CUENTA'><BR>");
+        out.println("<INPUT TYPE=SUBMIT VALUE='Cambio Datos'><BR>");
         out.println("</FORM>");
         
         out.println("</BODY></HTML>");

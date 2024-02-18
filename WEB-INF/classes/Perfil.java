@@ -40,19 +40,21 @@ public class Perfil extends HttpServlet {
                 
                 int victorias = rs.getInt(4);
                 int derrotas = rs.getInt(5);
+                String correo=rs.getString(7);
+                String telefono=rs.getString(8);
                 
                 out.println("<p class='perfil-info'>Usuario:   " + rs.getString(2) + "</p><BR><BR>");
                 out.println("<p class='perfil-info'>Victorias:    " + victorias + "</p><BR><BR>");
                 out.println("<p class='perfil-info'>Derrotas:    " + derrotas + "</p><BR><BR>");
+                out.println("<p class='perfil-info'>Correo:    " + correo + "</p><BR><BR>");
+                out.println("<p class='perfil-info'>Telefono: " + telefono + "</p><BR><BR>");
             } else {
                 out.println("<p>No se encontró información del perfil.</p>");
             }
             
             // Formulario para cambiar la contraseña
-            out.println("<FORM METHOD='POST' ACTION='EditarPassword'>");
-            out.println("<LABEL for=newPassword>Nueva Contraseña:</LABEL><BR>");
-            out.println("<INPUT TYPE=PASSWORD id=newPassword NAME=newPassword><BR><BR>");
-            out.println("<INPUT TYPE=SUBMIT VALUE='Cambiar Contraseña'><BR>");
+            out.println("<FORM METHOD='POST' ACTION='CambioCuenta'>");
+            out.println("<INPUT TYPE=SUBMIT VALUE='Cambiar Datos'><BR>");
             out.println("</FORM>");
             
             out.println("</BODY></HTML>");

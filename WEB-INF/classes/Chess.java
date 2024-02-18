@@ -11,7 +11,7 @@ public class Chess extends HttpServlet {
         ResultSet rs, rs2 = null, rs3 = null, rs4, rs5;
         PrintWriter out;
         String SQL, SQL2, SQL3, SQL4, SQL5;
-        String IdUsuario, IdPartida, IdJugador2;
+        String IdUsuario, IdPartida, IdJugador2, Nrival;
         HttpSession sesion;
         boolean turno;
         
@@ -37,14 +37,7 @@ public class Chess extends HttpServlet {
             out.println("<TITLE>Crear Partida</TITLE>");
             out.println("<CENTER>");
             
-            if (IdUsuario == null || IdJugador2 == null){
-                res.sendRedirect("Inicio");
-            } else{
-                out.println("Jugador 1: " + IdUsuario + "- Jugador 2: " + IdJugador2);
-            }
-            
-            
-            
+             
             SQL = "SELECT turno from detallespartidas WHERE IdPartida='" + IdPartida + "' AND IdUsuario='" + IdUsuario + "'";
             rs = st.executeQuery(SQL);
             
@@ -53,6 +46,22 @@ public class Chess extends HttpServlet {
             
             SQL3 = "SELECT * FROM tablero WHERE IdUsuario=" + IdJugador2 + " AND IdPartida=" + IdPartida + " ORDER BY columna, fila";
             rs3 = st3.executeQuery(SQL3);
+            
+            SQL4 = "SELECT * from usuarios WHERE IdUsuario='" + IdUsuario + "'";
+            rs4 = st4.executeQuery(SQL4);
+            rs4.next();
+            
+            SQL5 = "SELECT * from usuarios WHERE IdUsuario='" + IdJugador2 + "'";
+            rs5 = st5.executeQuery(SQL5);
+            rs5.next();
+            Nrival = rs5.getString(2);
+            
+            if (IdJugador2 == null){
+                out.println("¡Aun no tienes ningún rival!");
+            } else{
+                out.println(rs4.getString(2) + "    " + "VS    " + rs5.getString(2));
+            }
+            out.println("<BR><BR><BR>");
             
             //Creacion del tablero:
             char [][] tablero = new char[6][7];
@@ -86,13 +95,21 @@ public class Chess extends HttpServlet {
             }
             out.println("</TABLE><BR>");
             
+            //cerramos 
+            rs4.close();
+            rs5.close();
+            
             SQL4 = "SELECT * from detallespartidas WHERE IdPartida='" + IdPartida + "' AND IdUsuario='" + IdUsuario + "'";
             rs4 = st4.executeQuery(SQL4);
+            rs4.next();
             
             SQL5 = "SELECT * from detallespartidas WHERE IdPartida='" + IdPartida + "' AND IdUsuario='" + IdJugador2 + "'";
             rs5 = st5.executeQuery(SQL5);
+            rs5.next();
             
-            out.println(rs3.getInt(3) + " - " + rs4.getInt(4));
+            
+            out.println(rs4.getInt(3) + " - " + rs5.getInt(3));
+            out.println("<BR>");
             
             if (rs.next()){
                 turno = rs.getBoolean("turno");
@@ -106,12 +123,17 @@ public class Chess extends HttpServlet {
                     out.println("<input type=\"submit\" value=\"Tiradica\">");
                     out.println("</form>");
                 }   else{
-                    out.println("No te toca notas");
+                    out.println("<BR>");
+                    out.println("Espera a que " + Nrival + " tire.");
                 }
             } else{
-                out.println("No se ha podido determinar de quien es el turno. Consulta fallida o nula");
+                out.println("No se ha podido determinar de quien es el turno. Consulta fallida");
             }
-            
+            out.println("<BR><BR>");
+            out.println("<form action='Interfaz' method='post'>");
+            out.println("<button type='submit'>Volver</button>");
+            out.println("</form>");
+
             
             
             out.println("</BODY></HTML>");

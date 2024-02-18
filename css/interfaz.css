@@ -67,12 +67,22 @@ input[type="submit"]:hover {
 #header form {
     position: absolute;
     top: 10px;
-    right: 30px;
+    right: 0px;
+}
+
+#headerLOG form {
+    position: absolute;
+    top: 10px;
+    right: 50px;
 }
 
 
 /*PERFIL */
-#perfil {
+
+/* Estilos para el botón con id 'perfil' cuando se pasa el ratón sobre él */
+
+
+#perfil, #logout {
     background-color: transparent;
     border: none;
     color: #fff;
@@ -80,21 +90,34 @@ input[type="submit"]:hover {
     font-family: Arial, sans-serif;
     cursor: pointer;
     padding: 5px 10px;
-    margin: 0; /* Añadir para eliminar el margen predeterminado */
-     width: 100px; /* Ajusta el ancho del botón */
-    height: 100px; /* Ajusta la altura del botón */
-    border-radius: 90px; /* Añade bordes redondeados */
-    display: inline-block; /* Asegura que el tamaño se respete */
-    text-align: center; /* Centra el texto horizontalmente */
-    line-height: 0px; /* Centra el texto verticalmente */
+    margin: 0;
+    width: 100px;
+    height: 100px;
+    border-radius: 90px;
+    display: inline-block;
+    text-align: center;
+    line-height: 0px;
     transition: background-color 0.5s, box-shadow 0.5s, color 0.7s;
 }
-/* Estilos para el botón con id 'perfil' cuando se pasa el ratón sobre él */
-#perfil:hover {
+
+.button-container {
+    float: left; /* Hace que los contenedores de botones se coloquen uno al lado del otro */
+    margin-right: 1px; /* Ajusta el margen entre los botones si es necesario */
+}
+
+#logout:hover{
     background-color: #b3a506; /* Cambia el color de fondo cuando se pasa el ratón sobre el botón */
     color: #000; /* Cambia el color del texto cuando se pasa el ratón sobre el botón */
     box-shadow: 0px 0px 10px 4px rgba(227, 225, 224, 0.87);
 }
+
+#perfil:hover{
+    background-color: #b3a506; /* Cambia el color de fondo cuando se pasa el ratón sobre el botón */
+    color: #000; /* Cambia el color del texto cuando se pasa el ratón sobre el botón */
+    box-shadow: 0px 0px 10px 4px rgba(227, 225, 224, 0.87);
+}
+
+
 #interfaz {
     font-size: 24px;  
 }

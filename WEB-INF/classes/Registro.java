@@ -15,16 +15,27 @@ public class Registro extends HttpServlet {
         Statement st;
         ResultSet rs;
         PrintWriter out;
-        String SQL, usuario, password;
+        out=res.getWriter();
+        String SQL, usuario, password,correo,telefono;
         HttpSession sesion;
 
         try {
             usuario = req.getParameter("usuario");
             password = req.getParameter("password");
+            correo = req.getParameter("correo");
+            telefono = req.getParameter("telefono");
             
-            if (usuario == null || usuario.isEmpty() || password == null || password.isEmpty()) {
-                res.sendRedirect("CrearCuenta");
-                throw new ServletException("El nombre de usuario y la contraseña son obligatorios.");
+            res.setContentType("text/html");
+            out = res.getWriter();
+            
+            if (usuario == null || usuario.isEmpty() || password == null || password.isEmpty() || correo == null || correo.isEmpty() || telefono == null || telefono.isEmpty()) {
+                out.println("<FORM id='redirect' ACTION='CrearCuenta' METHOD='POST'> </FORM>");
+                out.println("<script>");
+                out.println("window.onload = function() {");
+                out.println(" document.getElementById('redirect').submit();");
+                out.println("};");
+                out.println("</script>");
+                throw new ServletException("Todos los campos son obligatorios.");
             }
             
             // Hash de la contraseña
@@ -47,26 +58,28 @@ public class Registro extends HttpServlet {
             }
 
             // Verificar si el usuario ya existe
-            // Verificar si el usuario ya existe
             SQL = "SELECT COUNT(*) FROM usuarios WHERE usuario='" + usuario + "'";
             rs = st.executeQuery(SQL);
-
-            res.setContentType("text/html");
-            out = res.getWriter();
             
             if (rs.next() && rs.getInt(1)==0) {
                 // Usuario no existe, procedemos a registrarlo
-                SQL = "INSERT INTO usuarios (usuario, password) VALUES ('" + usuario + "', '" + password + "')";
-                rs.close();
+                SQL = "INSERT INTO usuarios (usuario, password, correo, telefono) VALUES ('" + usuario + "', '" + password + "','" + correo + "','" + telefono + "')";
                 st.executeUpdate(SQL);
                 rs.close();
+                
                 SQL = "SELECT IdUsuario FROM usuarios WHERE usuario='" + usuario + "'";
                 rs = st.executeQuery(SQL);
                 res.sendRedirect("Inicio");
             } else {
                 // Usuario ya existe
-                out.println("<p>El nombre de usuario ya está en uso. Por favor, elija otro.</p>");
-                res.sendRedirect("CrearCuenta");    
+                
+                out.println("<FORM id='redirect' ACTION='CrearCuenta' METHOD='POST'> </FORM>");
+                //Mediante un script hacemos que redirija directamente a la pagina del menu lanzando el formulario anterior
+                out.println("<script>");
+                out.println("window.onload = function() {");
+                out.println(" document.getElementById('redirect').submit();");
+                out.println("};");
+                out.println("</script>");
                 // Puede agregar un enlace para volver al formulario de registro o simplemente redirigir
             }
             rs.close();

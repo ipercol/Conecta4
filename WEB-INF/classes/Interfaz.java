@@ -11,7 +11,7 @@ public class Interfaz extends HttpServlet {
         Statement st,st2;
         ResultSet rs,rs2 = null;
         PrintWriter out;
-        String SQL,SQL2, IdUsuario, IdPartida, IdJugador2;
+        String SQL,SQL2, IdUsuario, IdJugador2;
         HttpSession sesion;
 
     try{
@@ -34,39 +34,81 @@ public class Interfaz extends HttpServlet {
         out.println("<link rel=\"stylesheet\" type=\"text/css\" href=\"css/interfaz.css\">");
         out.println("</HEAD>");
         
-        
-        out.println("<DIV id='header'>");
+        out.println("<div id ='header'>");
         out.println("<H1>Menu</H1>");
+        
+    
+        out.println("<div style='display: inline-block;'>");
         out.println("<FORM ACTION='Perfil' METHOD='POST'>");
         out.println("<INPUT TYPE='SUBMIT' VALUE='PERFIL' id='perfil'>");
         out.println("</FORM>");
-        out.println("</DIV>");
+        out.println("</div>");
+        
+        out.println("<div style='display: inline-block;'>");
+        out.println("<FORM ACTION='LogOut' METHOD='POST'>");
+        out.println("<INPUT TYPE='SUBMIT' VALUE='LOGOUT' id='logout'>");
+        out.println("</FORM>");
+        out.println("</div>");
+        
+        out.println("</div>");
+        
+        
+        
+        
+        
         
         out.println("<CENTER>");
         
         
+        
+        
         // Consulta SQL para obtener todas las partidas disponibles para el usuario actual
-        SQL = "SELECT * FROM detallespartidas WHERE IdUsuario='" + IdUsuario + "'";
+        SQL = "SELECT * FROM detallespartidas WHERE IdUsuario='" + IdUsuario + "' AND turno=1";
         rs = st.executeQuery(SQL);
         
         out.println("<div id='partidas-container'>");
         // Mostrar las partidas disponibles
-        out.println("<h2>Tus partidas:</h2>");
+        out.println("<h2>Tus partidas</h2>");
+        out.println("<p>Tu turno:</p>");
         while (rs.next()){
-            //SQL2 = "SELECT detallespartidas.IdPartida, usuarios.IdUsuario, usuarios.usuario FROM usuarios INNER JOIN detallespartidas ON usuarios.IdUsuario = detallespartidas.IdUsuario WHERE detallespartidas
-            SQL2 = "SELECT IdUsuario FROM detallespartidas WHERE IdPartida='" + rs.getString(2) + "' AND IdUsuario <> '" + IdUsuario + "'";
+            String IdPartida = rs.getString(2);
+            SQL2 = "SELECT detallespartidas.IdPartida, usuarios.IdUsuario, usuarios.usuario FROM usuarios INNER JOIN detallespartidas ON "  
+            + "usuarios.IdUsuario = detallespartidas.IdUsuario WHERE detallespartidas.IdPartida='" + IdPartida + "' AND usuarios.IdUsuario <> '" + IdUsuario + "'"; 
+            //SQL2 = "SELECT IdUsuario FROM detallespartidas WHERE IdPartida='" + rs.getString(2) + "' AND IdUsuario <> '" + IdUsuario + "'";
             rs2=st2.executeQuery(SQL2);
-            
+
             while (rs2.next()){
-                IdJugador2 = rs2.getString(1);
+                IdJugador2 = rs2.getString(2);
                 out.println("<FORM ACTION='Chess' METHOD='POST'>");
                 out.println("<INPUT TYPE='hidden' NAME='IdPartida' VALUE='" + rs.getString(2) + "'>");
-                out.println("<INPUT TYPE='hidden' NAME='IdJugador2' VALUE='" + rs2.getString(1) + "'>");
-                out.println("<BUTTON id='partidas' TYPE='Entrar'>Partida " + rs.getString(2) + "</BUTTON></FORM>");
+                out.println("<INPUT TYPE='hidden' NAME='IdJugador2' VALUE='" + rs2.getString(2) + "'>");
+                out.println("<BUTTON id='partidas' TYPE='Entrar'>Partida " + rs.getString(2) + " contra " + rs2.getString(3) + "</BUTTON></FORM>");
             }
             rs2.close();
         }
         rs.close();
+        
+        out.println("<p>Turno del rival:</p>");
+        SQL = "SELECT * FROM detallespartidas WHERE IdUsuario='" + IdUsuario + "' AND turno=0";
+        rs = st.executeQuery(SQL);
+        while (rs.next()){
+            String IdPartida = rs.getString(2);
+            SQL2 = "SELECT detallespartidas.IdPartida, usuarios.IdUsuario, usuarios.usuario FROM usuarios INNER JOIN detallespartidas ON "  
+            + "usuarios.IdUsuario = detallespartidas.IdUsuario WHERE detallespartidas.IdPartida='" + IdPartida + "' AND usuarios.IdUsuario <> '" + IdUsuario + "'"; 
+            //SQL2 = "SELECT IdUsuario FROM detallespartidas WHERE IdPartida='" + rs.getString(2) + "' AND IdUsuario <> '" + IdUsuario + "'";
+            rs2=st2.executeQuery(SQL2);
+
+            while (rs2.next()){
+                IdJugador2 = rs2.getString(2);
+                out.println("<FORM ACTION='Chess' METHOD='POST'>");
+                out.println("<INPUT TYPE='hidden' NAME='IdPartida' VALUE='" + rs.getString(2) + "'>");
+                out.println("<INPUT TYPE='hidden' NAME='IdJugador2' VALUE='" + rs2.getString(2) + "'>");
+                out.println("<BUTTON id='partidas' TYPE='Entrar'>Partida " + rs.getString(2) + " contra " + rs2.getString(3) + "</BUTTON></FORM>");
+            }
+            rs2.close();
+        }
+        rs.close();
+        
         out.println("</div><BR><BR>");
         
         out.println("<div style='margin-top: 20px;'>"); // Añadir margen arriba

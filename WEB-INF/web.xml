@@ -84,12 +84,12 @@
     </servlet-mapping>
 
     <servlet>
-        <servlet-name>EditarPassword</servlet-name>
-        <servlet-class>EditarPassword</servlet-class>
+        <servlet-name>EditarPerfil</servlet-name>
+        <servlet-class>EditarPerfil</servlet-class>
     </servlet>
     <servlet-mapping>
-        <servlet-name>EditarPassword</servlet-name>
-        <url-pattern>/EditarPassword</url-pattern>
+        <servlet-name>EditarPerfil</servlet-name>
+        <url-pattern>/EditarPerfil</url-pattern>
     </servlet-mapping>
 
     <servlet>
@@ -117,6 +117,33 @@
     <servlet-mapping>
         <servlet-name>FinalPartida</servlet-name>
         <url-pattern>/FinalPartida</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>CambioCuenta</servlet-name>
+        <servlet-class>CambioCuenta</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>CambioCuenta</servlet-name>
+        <url-pattern>/CambioCuenta</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>LogOut</servlet-name>
+        <servlet-class>LogOut</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>LogOut</servlet-name>
+        <url-pattern>/LogOut</url-pattern>
+    </servlet-mapping>
+
+        <servlet>
+        <servlet-name>Puntuacion</servlet-name>
+        <servlet-class>Puntuacion</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>Puntuacion</servlet-name>
+        <url-pattern>/Puntuacion</url-pattern>
     </servlet-mapping>
 
 

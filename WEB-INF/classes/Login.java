@@ -43,7 +43,6 @@ public class Login extends HttpServlet {
             
             //Consulta
             SQL = "SELECT * FROM usuarios WHERE usuario='" + usuario + "' AND password='" + password + "'";
-
             rs = st.executeQuery(SQL);
             
             out = res.getWriter();

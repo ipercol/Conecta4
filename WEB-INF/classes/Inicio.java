@@ -30,7 +30,7 @@ public class Inicio extends HttpServlet {
         out.println("<INPUT TYPE=SUBMIT VALUE=LOGIN><BR>");
         out.println("</FORM>");
         
-        out.println("<FORM METHOD=GET ACTION=CrearCuenta>");
+        out.println("<FORM METHOD=POST ACTION=CrearCuenta>");
         out.println("<INPUT TYPE=SUBMIT VALUE=REGISTRARSE>");
         out.println("</FORM>");
         
