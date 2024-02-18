@@ -110,6 +110,14 @@
         <url-pattern>/BuscarPartida</url-pattern>
     </servlet-mapping>
 
+   <servlet>
+        <servlet-name>FinalPartida</servlet-name>
+        <servlet-class>FinalPartida</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>FinalPartida</servlet-name>
+        <url-pattern>/FinalPartida</url-pattern>
+    </servlet-mapping>
 
 
     <session-config>

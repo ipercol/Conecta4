@@ -43,18 +43,71 @@ public class Movimientos extends HttpServlet {
             while (rs.next()){
                 while(rs4.next()){
                     int tirada = rs4.getInt(1) + 1;
-                        while (rs.getInt(1) > 0){
-                        
-                        fila = rs.getInt(1) - 1 ;
-                        
-                        
-                        SQL2 = "INSERT INTO tablero (IdPartida, columna, fila, IdUsuario, tirada) VALUES ('" + IdPartida + "', '" + columna + "', '" + fila + "', '" + IdUsuario + "', '" + tirada + "')";
+                    
+                            while (rs.getInt(1) > 0){
+                            
+                            fila = rs.getInt(1) - 1 ;
+                            
+                            
+                            SQL2 = "INSERT INTO tablero (IdPartida, columna, fila, IdUsuario, tirada) VALUES ('" + IdPartida + "', '" + columna + "', '" + fila + "', '" + IdUsuario + "', '" + tirada + "')";
+                            st.executeUpdate(SQL2);
+                            
+                            
+                            
+                            SQL2 = "UPDATE detallespartidas SET turno = 0 WHERE IdPartida='" + IdPartida + "' AND IdUsuario= '" + IdUsuario + "'";
+                            SQL3 = "UPDATE detallespartidas SET turno = 1 WHERE IdPartida='" + IdPartida + "' AND IdUsuario= '" + IdJugador2 + "'"; 
+                            con.setAutoCommit(false);
+                            
+                            st.executeUpdate(SQL2);
+                            st.executeUpdate(SQL3);
+                            
+                            con.commit();
+                            con.setAutoCommit(true);
+                            if (tirada == 36) {
+                                out.println("<FORM id='redirect' ACTION='FinalPartida' METHOD='POST'>");
+                                out.println("<INPUT TYPE='hidden' NAME='IdPartida' VALUE='" + IdPartida + "'>");
+                                out.println("</FORM>");
+                                out.println("<script>");
+                                out.println("window.onload = function() {");
+                                out.println(" document.getElementById('redirect').submit();");
+                                out.println("};");
+                                out.println("</script>");    
+                            } else {
+                                //NOS VAMOS
+                                out.println("<FORM id='redirect' ACTION='Chess' METHOD='POST'>");
+                                out.println("<INPUT TYPE='hidden' NAME='IdPartida' VALUE='" + IdPartida + "'>");
+                                out.println("<INPUT TYPE='hidden' NAME='IdJugador2' VALUE='" + IdJugador2 + "'>");
+                                out.println("</FORM>");
+                                out.println("<script>");
+                                out.println("window.onload = function() {");
+                                out.println(" document.getElementById('redirect').submit();");
+                                out.println("};");
+                                out.println("</script>");
+                            }
+                        } 
+                            out.println("<FORM id='redirect' ACTION='Chess' METHOD='POST'>");
+                            out.println("<INPUT TYPE='hidden' NAME='IdPartida' VALUE='" + IdPartida + "'>");
+                            out.println("<INPUT TYPE='hidden' NAME='IdJugador2' VALUE='" + IdJugador2 + "'>");
+                            out.println("</FORM>");
+                            out.println("<script>");
+                            out.println("window.onload = function() {");
+                            out.println(" document.getElementById('redirect').submit();");
+                            out.println("};");
+                            out.println("</script>");
+                    
+                }
+            }
+            
+            while (!rs.next()){
+                     
+                        fila = fila ;
+                        SQL2 = "INSERT INTO tablero (IdPartida, columna, fila, IdUsuario) VALUES ('" + IdPartida + "', '" + columna + "', '" + fila + "', '" + IdUsuario + "')";
                         st.executeUpdate(SQL2);
                         
                         
+                        SQL2 = "UPDATE  detallespartidas SET turno = 0 WHERE IdPartida='" + IdPartida + "' AND IdUsuario= '" + IdUsuario + "'"; 
+                        SQL3 = "UPDATE  detallespartidas SET turno = 1 WHERE IdPartida='" + IdPartida + "' AND IdUsuario= '" + IdJugador2 + "'"; 
                         
-                        SQL2 = "UPDATE detallespartidas SET turno = 0 WHERE IdPartida='" + IdPartida + "' AND IdUsuario= '" + IdUsuario + "'";
-                        SQL3 = "UPDATE detallespartidas SET turno = 1 WHERE IdPartida='" + IdPartida + "' AND IdUsuario= '" + IdJugador2 + "'"; 
                         con.setAutoCommit(false);
                         
                         st.executeUpdate(SQL2);
@@ -62,6 +115,7 @@ public class Movimientos extends HttpServlet {
                         
                         con.commit();
                         con.setAutoCommit(true);
+                        
                         //NOS VAMOS
                         out.println("<FORM id='redirect' ACTION='Chess' METHOD='POST'>");
                         out.println("<INPUT TYPE='hidden' NAME='IdPartida' VALUE='" + IdPartida + "'>");
@@ -72,49 +126,8 @@ public class Movimientos extends HttpServlet {
                         out.println(" document.getElementById('redirect').submit();");
                         out.println("};");
                         out.println("</script>");
-                        
-                    }
-                        out.println("<FORM id='redirect' ACTION='Chess' METHOD='POST'>");
-                        out.println("<INPUT TYPE='hidden' NAME='IdPartida' VALUE='" + IdPartida + "'>");
-                        out.println("<INPUT TYPE='hidden' NAME='IdJugador2' VALUE='" + IdJugador2 + "'>");
-                        out.println("</FORM>");
-                        out.println("<script>");
-                        out.println("window.onload = function() {");
-                        out.println(" document.getElementById('redirect').submit();");
-                        out.println("};");
-                        out.println("</script>");
-                
-                }
-            }
-            
-            while (!rs.next()){
-                    fila = fila ;
-                    SQL2 = "INSERT INTO tablero (IdPartida, columna, fila, IdUsuario) VALUES ('" + IdPartida + "', '" + columna + "', '" + fila + "', '" + IdUsuario + "')";
-                    st.executeUpdate(SQL2);
+                      
                     
-                    
-                    SQL2 = "UPDATE  detallespartidas SET turno = 0 WHERE IdPartida='" + IdPartida + "' AND IdUsuario= '" + IdUsuario + "'"; 
-                    SQL3 = "UPDATE  detallespartidas SET turno = 1 WHERE IdPartida='" + IdPartida + "' AND IdUsuario= '" + IdJugador2 + "'"; 
-                    
-                    con.setAutoCommit(false);
-                    
-                    st.executeUpdate(SQL2);
-                    st.executeUpdate(SQL3);
-                    
-                    con.commit();
-                    con.setAutoCommit(true);
-                    
-                    //NOS VAMOS
-                    out.println("<FORM id='redirect' ACTION='Chess' METHOD='POST'>");
-                    out.println("<INPUT TYPE='hidden' NAME='IdPartida' VALUE='" + IdPartida + "'>");
-                    out.println("<INPUT TYPE='hidden' NAME='IdJugador2' VALUE='" + IdJugador2 + "'>");
-                    out.println("</FORM>");
-                    out.println("<script>");
-                    out.println("window.onload = function() {");
-                    out.println(" document.getElementById('redirect').submit();");
-                    out.println("};");
-                    out.println("</script>");
-                  
             }
             
             out.println("</HTML></BODY>");
