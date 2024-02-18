@@ -7,10 +7,11 @@ public class Chess extends HttpServlet {
             throws ServletException, IOException {
         
         Connection con;
-        Statement st, st2, st3;
-        ResultSet rs, rs2 = null, rs3 = null;
+        Statement st, st2, st3, st4, st5;
+        ResultSet rs, rs2 = null, rs3 = null, rs4, rs5;
         PrintWriter out;
-        String SQL, SQL2, SQL3, IdUsuario, IdPartida, IdJugador2;
+        String SQL, SQL2, SQL3, SQL4, SQL5;
+        String IdUsuario, IdPartida, IdJugador2;
         HttpSession sesion;
         boolean turno;
         
@@ -26,6 +27,8 @@ public class Chess extends HttpServlet {
             st = con.createStatement();
             st2 = con.createStatement();
             st3 = con.createStatement();
+            st4 = con.createStatement();
+            st5 = con.createStatement();
             
             res.setContentType("text/html;charset=UTF-8");
             out = res.getWriter();
@@ -33,19 +36,13 @@ public class Chess extends HttpServlet {
             out.println("<HTML><HEAD>");
             out.println("<TITLE>Crear Partida</TITLE>");
             out.println("<CENTER>");
+            
             if (IdUsuario == null || IdJugador2 == null){
-                out.println("patatas");
+                res.sendRedirect("Inicio");
             } else{
-                out.println("Jugador 1: " + IdUsuario + "Jugador 2:" + IdJugador2);
+                out.println("Jugador 1: " + IdUsuario + "- Jugador 2: " + IdJugador2);
             }
             
-            SQL2 = "SELECT MAX(tirada) FROM tablero WHERE IdPartida='" + IdPartida + "'";
-            rs2 = st.executeQuery(SQL2);
-            if (rs2.next()){
-                out.println("Movimiento :" + rs2.getInt(1));
-            } else {
-                out.println("No hay datos");
-            }
             
             
             SQL = "SELECT turno from detallespartidas WHERE IdPartida='" + IdPartida + "' AND IdUsuario='" + IdUsuario + "'";
@@ -88,6 +85,14 @@ public class Chess extends HttpServlet {
                 out.println("</TR>");
             }
             out.println("</TABLE><BR>");
+            
+            SQL4 = "SELECT * from detallespartidas WHERE IdPartida='" + IdPartida + "' AND IdUsuario='" + IdUsuario + "'";
+            rs4 = st4.executeQuery(SQL4);
+            
+            SQL5 = "SELECT * from detallespartidas WHERE IdPartida='" + IdPartida + "' AND IdUsuario='" + IdJugador2 + "'";
+            rs5 = st5.executeQuery(SQL5);
+            
+            out.println(rs3.getInt(3) + " - " + rs4.getInt(4));
             
             if (rs.next()){
                 turno = rs.getBoolean("turno");

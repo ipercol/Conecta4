@@ -66,6 +66,7 @@ public class Movimientos extends HttpServlet {
                             if (tirada == 36) {
                                 out.println("<FORM id='redirect' ACTION='FinalPartida' METHOD='POST'>");
                                 out.println("<INPUT TYPE='hidden' NAME='IdPartida' VALUE='" + IdPartida + "'>");
+                                out.println("<INPUT TYPE='hidden' NAME='IdJugador2' VALUE='" + IdJugador2 + "'>");
                                 out.println("</FORM>");
                                 out.println("<script>");
                                 out.println("window.onload = function() {");

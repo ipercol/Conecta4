@@ -12,11 +12,14 @@ public class FinalPartida extends HttpServlet {
         ResultSet rs,rs2,rs3;
         PrintWriter out;
         HttpSession sesion;
-        String IdPartida,SQL,SQL2,SQL3,ganador,ganadorNombre ;
+        String SQL,SQL2,SQL3,Usuario1,Usuario2 ;
+        String IdPartida, IdUsuario, IdJugador2;
 
         try {
-            
+            sesion = req.getSession();
+            IdUsuario = (String)sesion.getAttribute("IdUsuario");
             IdPartida = req.getParameter("IdPartida");
+            IdJugador2 = req.getParameter("IdJugador2");
 
             Class.forName("com.mysql.jdbc.Driver");
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/conecta4", "root", "");
@@ -24,50 +27,40 @@ public class FinalPartida extends HttpServlet {
             st2=con.createStatement();
             st3=con.createStatement();
             
-
             res.setContentType("text/html;charset=UTF-8");
             out = res.getWriter();
             out.println("<HTML><BODY>");
+            
             SQL="SELECT usuarios.usuario, detallespartidas.puntos FROM detallespartidas INNER JOIN usuarios ON detallespartidas.IdUsuario = usuarios.IdUsuario WHERE detallespartidas.Idpartida='" + IdPartida + "' ORDER BY detallespartidas.puntos";
-            rs=st.executeQuery(SQL);
+            rs = st.executeQuery(SQL);
             while (rs.next()) {
-                        out.println("<p>Jugador: " + rs.getString(1) + ", Puntos: " + rs.getString(2) + "</p><BR>");
-                    }
-
-            // Obtener el ganador de la partida y la puntuación
-            SQL2="SELECT TOP1 detallespartidas.IdUsuario, usuarios.usuario, detallespartidas.puntos FROM detallespartidas INNER JOIN usuarios ON detallespartidas.IdUsuario = usuarios.IdUsuario WHERE detallespartidas.Idpartida='" + IdPartida + "' ORDER BY detallespartidas.puntos";
-            rs2=st.executeQuery(SQL2);
-            
-            
-            if (rs2.next()) {
-            ganador = rs2.getString(1);
-            ganadorNombre=rs2.getString(2);
-            int puntos = rs2.getInt(3);
-            
-
-                out.println("<head><title>Resultado de la Partida</title></head>");
-                out.println("<h2>Resultado de la Partida</h2>");
-                out.println("<p>El ganador es: " + ganadorNombre + "</p>");
-                out.println("<p>Puntuación obtenida: " + puntos + "</p>");
-                out.println("</body></html>");
-                
-                SQL3="UPDATE usuarios SET victorias= victorias + 1 WHERE IdUsuario='" + ganador + "'";
-                st3.executeUpdate(SQL3);
-                SQL3="UPDATE usuarios SET derrotas= derrotas + 1 WHERE IdUsuario<>'" + ganador + "'";
-                st3.executeUpdate(SQL3);
-                
-                
-            } else {
-                out.println("<html><head><title>Resultado de la Partida</title></head><body>");
-                out.println("<h2>Resultado de la Partida</h2>");
-                out.println("<p>La partida ha terminado en empate.</p>");
-                out.println("</body></html>");
+                out.println("<p>Jugador: " + rs.getString(1) + ", Puntos: " + rs.getString(2) + "</p><BR>");
             }
-
             rs.close();
-            st.close();
-            con.close();
-            out.close();
+  
+            SQL2 = "SELECT usuarios.usuario, detallespartidas.puntos FROM detallespartidas INNER JOIN usuarios ON detallespartidas.IdUsuario = usuarios.IdUsuario WHERE detallespartidas.Idpartida='" + IdPartida + "' AND usuarios.IdUsuario='" + IdUsuario + "'";
+            rs2 = st2.executeQuery(SQL2);
+            rs2.next(); // Move to the first row
+            Usuario1 = rs2.getString(1);
+            int puntosUsuario1 = rs2.getInt(2);
+            rs2.close();
+            
+            SQL3 = "SELECT usuarios.usuario, detallespartidas.puntos FROM detallespartidas INNER JOIN usuarios ON detallespartidas.IdUsuario = usuarios.IdUsuario WHERE detallespartidas.Idpartida='" + IdPartida + "' AND usuarios.IdUsuario='" + IdJugador2 + "'";
+            rs3 = st3.executeQuery(SQL3);
+            rs3.next(); // Move to the first row
+            Usuario2 = rs3.getString(1);
+            int puntosUsuario2 = rs3.getInt(2);
+            rs3.close();
+            
+            if (puntosUsuario1 > puntosUsuario2) {
+                out.println("El ganador es: " + Usuario1);
+            } else if (puntosUsuario1 == puntosUsuario2) {
+                out.println("EMPATE");
+            } else {
+                out.println("El ganador es: " + Usuario2);
+            }
+            
+            out.println("</body></html>");
         } catch (Exception e) {
             System.err.println(e);
         }
