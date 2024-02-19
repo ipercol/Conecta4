@@ -60,7 +60,6 @@ public class Movimientos extends HttpServlet {
                         con.commit();
                         con.setAutoCommit(true);
                         
-                        
                         //PUNTOS VERTICAL--------------------------------------------------
                         //Seleccionamos todas las filas (y mas cosas) en las que un jugador ha puesto ficha para cierta columna
                          if (fila < 3){
@@ -80,7 +79,67 @@ public class Movimientos extends HttpServlet {
                             rs2.close();
                         }
                         
-                        
+                        //PUNTOS HORIZONTAL--------------------------------------------------
+                         if (columna < 3){
+                            int cuenta = columna + 3;
+                            SQL = "SELECT COUNT(fila) FROM tablero WHERE IdUsuario='" + IdUsuario + "' AND IdPartida='" + IdPartida + "'AND fila = '" + fila + "' AND columna <='" + cuenta + "'";
+                            rs2 = st2.executeQuery(SQL);
+                            while (rs2.next()){
+                                int conecta = rs2.getInt(1);
+                                if(conecta == 4){
+                                  SQL2 = "UPDATE detallespartidas SET puntos=puntos + 10 WHERE IdPartida='" + IdPartida + "' AND IdUsuario='" + IdUsuario + "'";
+                                  st2.executeUpdate(SQL2);
+                                  break;
+                                } else {
+                                    conecta = conecta;
+                                }
+                            }
+                            rs2.close();
+                        } else if (columna > 3){
+                            int cuenta = columna - 3;
+                            SQL = "SELECT COUNT(fila) FROM tablero WHERE IdUsuario='" + IdUsuario + "' AND IdPartida='" + IdPartida + "'AND fila = '" + fila + "' AND columna <='" + cuenta + "'";
+                            rs2 = st2.executeQuery(SQL);
+                            while (rs2.next()){
+                                int conecta = rs2.getInt(1);
+                                if(conecta == 4){
+                                  SQL2 = "UPDATE detallespartidas SET puntos=puntos + 10 WHERE IdPartida='" + IdPartida + "' AND IdUsuario='" + IdUsuario + "'";
+                                  st2.executeUpdate(SQL2);
+                                  break;
+                                } else {
+                                    conecta = conecta;
+                                }
+                            }
+                            rs2.close();
+                        } else{
+                            int cuenta = columna + 2;
+                            SQL = "SELECT COUNT(fila) FROM tablero WHERE IdUsuario='" + IdUsuario + "' AND IdPartida='" + IdPartida + "'AND fila = '" + fila + "' AND columna <='" + cuenta + "'";
+                            rs2 = st2.executeQuery(SQL);
+                            while (rs2.next()){
+                                int conecta = rs2.getInt(1);
+                                if(conecta == 4){
+                                  SQL2 = "UPDATE detallespartidas SET puntos=puntos + 10 WHERE IdPartida='" + IdPartida + "' AND IdUsuario='" + IdUsuario + "'";
+                                  st2.executeUpdate(SQL2);
+                                  break;
+                                } else {
+                                    conecta = conecta;
+                                }
+                            }
+                            rs2.close();
+                            cuenta = columna - 2;
+                            SQL = "SELECT COUNT(fila) FROM tablero WHERE IdUsuario='" + IdUsuario + "' AND IdPartida='" + IdPartida + "'AND fila = '" + fila + "' AND columna <='" + cuenta + "'";
+                            rs2 = st2.executeQuery(SQL);
+                            while (rs2.next()){
+                                int conecta = rs2.getInt(1);
+                                if(conecta == 4){
+                                  SQL2 = "UPDATE detallespartidas SET puntos=puntos + 10 WHERE IdPartida='" + IdPartida + "' AND IdUsuario='" + IdUsuario + "'";
+                                  st2.executeUpdate(SQL2);
+                                  break;
+                                } else {
+                                    conecta = conecta;
+                                }
+                            }
+                            rs2.close();
+                        }
                         
                         if (tirada == 42) {
                             out.println("<FORM id='redirect' ACTION='FinalPartida' METHOD='POST'>");
@@ -140,6 +199,53 @@ public class Movimientos extends HttpServlet {
                         con.commit();
                         con.setAutoCommit(true);
                         
+                        //PUNTOS HORIZONTAL--------------------------------------------------
+                         if (columna < 3){
+                            int cuenta = columna + 3;
+                            SQL = "SELECT COUNT(fila) FROM tablero WHERE IdUsuario='" + IdUsuario + "' AND IdPartida='" + IdPartida + "'AND fila = '" + fila + "' AND columna <='" + cuenta + "'";
+                            rs2 = st2.executeQuery(SQL);
+                            while (rs2.next()){
+                                int conecta = rs2.getInt(1);
+                                if(conecta == 4){
+                                  SQL2 = "UPDATE detallespartidas SET puntos=puntos + 10 WHERE IdPartida='" + IdPartida + "' AND IdUsuario='" + IdUsuario + "'";
+                                  st2.executeUpdate(SQL2);
+                                  break;
+                                } else {
+                                    conecta = conecta;
+                                }
+                            }
+                            rs2.close();
+                        } else if (columna > 3){
+                            int cuenta = columna - 3;
+                            SQL = "SELECT COUNT(fila) FROM tablero WHERE IdUsuario='" + IdUsuario + "' AND IdPartida='" + IdPartida + "'AND fila = '" + fila + "' AND columna <='" + cuenta + "'";
+                            rs2 = st2.executeQuery(SQL);
+                            while (rs2.next()){
+                                int conecta = rs2.getInt(1);
+                                if(conecta == 4){
+                                  SQL2 = "UPDATE detallespartidas SET puntos=puntos + 10 WHERE IdPartida='" + IdPartida + "' AND IdUsuario='" + IdUsuario + "'";
+                                  st2.executeUpdate(SQL2);
+                                  break;
+                                } else {
+                                    conecta = conecta;
+                                }
+                            }
+                            rs2.close();
+                        } else{
+                            int cuenta = columna + 2;
+                            SQL = "SELECT COUNT(fila) FROM tablero WHERE IdUsuario='" + IdUsuario + "' AND IdPartida='" + IdPartida + "'AND fila = '" + fila + "' AND columna <='" + cuenta + "'";
+                            rs2 = st2.executeQuery(SQL);
+                            while (rs2.next()){
+                                int conecta = rs2.getInt(1);
+                                if(conecta == 4){
+                                  SQL2 = "UPDATE detallespartidas SET puntos=puntos + 10 WHERE IdPartida='" + IdPartida + "' AND IdUsuario='" + IdUsuario + "'";
+                                  st2.executeUpdate(SQL2);
+                                  break;
+                                } else {
+                                    conecta = conecta;
+                                }
+                            }
+                        
+                        }                        
                         //REDIRECT
                         out.println("<FORM id='redirect' ACTION='Chess' METHOD='POST'>");
                         out.println("<INPUT TYPE='hidden' NAME='IdPartida' VALUE='" + IdPartida + "'>");
@@ -172,6 +278,5 @@ public class Movimientos extends HttpServlet {
         } catch (Exception e){
             System.err.println(e);
         }
-    
     }
 }
