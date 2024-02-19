@@ -50,6 +50,7 @@ public class Interfaz extends HttpServlet {
         out.println("</FORM>");
         out.println("</div>");
         
+        
         out.println("</div>");
         
         

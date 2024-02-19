@@ -23,6 +23,7 @@ public class Perfil extends HttpServlet {
                 throw new ServletException("Error al conectar con la base de datos", e);
             }
             PrintWriter out = res.getWriter();
+            
             SQL = "SELECT * FROM usuarios WHERE IdUsuario = '" + idUsuario + "'";
             rs = st.executeQuery(SQL);
             
@@ -42,6 +43,8 @@ public class Perfil extends HttpServlet {
                 int derrotas = rs.getInt(5);
                 String correo=rs.getString(7);
                 String telefono=rs.getString(8);
+                
+                
                 
                 out.println("<p class='perfil-info'>Usuario:   " + rs.getString(2) + "</p><BR><BR>");
                 out.println("<p class='perfil-info'>Victorias:    " + victorias + "</p><BR><BR>");
