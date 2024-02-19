@@ -1,6 +1,8 @@
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.math.BigInteger;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import java.io.*;
 import java.sql.*;
@@ -20,17 +22,19 @@ public class Login extends HttpServlet {
         
         try{
             try {
-                Class.forName("com.mysql.jdbc.Driver");
-                con = DriverManager.getConnection("jdbc:mysql://localhost:3306/conecta4","root","");
-                st = con.createStatement();
-            } catch (ClassNotFoundException | SQLException e) {
-                throw new ServletException("Error al conectar con la base de datos", e);
-            }
+                    Class.forName("com.mysql.jdbc.Driver");
+                } catch (ClassNotFoundException ex) {
+                    Logger.getLogger(CrearCuenta.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            
             sesion = req.getSession();
             // Obtener parámetros del formulario
             usuario = req.getParameter("usuario");
             password = req.getParameter("password");
-        
+            
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/conecta4","root","");
+            st = con.createStatement();
+            
             //hash de la contraseña
             try{
                 MessageDigest digest = MessageDigest.getInstance("SHA-512");

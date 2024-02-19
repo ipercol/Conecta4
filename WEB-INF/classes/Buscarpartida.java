@@ -2,6 +2,8 @@ import java.io.*;
 import java.sql.*;
 import javax.servlet.*;
 import javax.servlet.http.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class BuscarPartida extends HttpServlet {
     public void doPost(HttpServletRequest req, HttpServletResponse res)
@@ -17,15 +19,15 @@ public class BuscarPartida extends HttpServlet {
         // Obtener el ID de usuario de la sesión
         sesion = req.getSession();
         IdUsuario = (String)sesion.getAttribute("IdUsuario");
-
         try {
-            Class.forName("com.mysql.jdbc.Driver");
-            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/conecta4","root","");
-            st = con.createStatement();
-            st2 = con.createStatement();
-        } catch (ClassNotFoundException | SQLException e) {
-            throw new ServletException("Error al conectar con la base de datos", e);
-        }
+                    Class.forName("com.mysql.jdbc.Driver");
+                } catch (ClassNotFoundException ex) {
+                    Logger.getLogger(CrearCuenta.class.getName()).log(Level.SEVERE, null, ex);
+                }
+        con = DriverManager.getConnection("jdbc:mysql://localhost:3306/conecta4","root","");
+        st = con.createStatement();
+        st2 = con.createStatement();
+        
         
 
         // Renderizar la página HTML para mostrar las partidas disponibles

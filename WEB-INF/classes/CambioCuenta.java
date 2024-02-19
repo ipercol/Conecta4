@@ -2,7 +2,6 @@ import java.io.*;
 import javax.servlet.*;
 import javax.servlet.http.*;
 import javax.servlet.ServletException.*;
-
 public class CambioCuenta extends HttpServlet {
 
     public void doPost(HttpServletRequest req, HttpServletResponse res)

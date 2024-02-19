@@ -2,6 +2,8 @@ import java.io.*;
 import javax.servlet.*;
 import javax.servlet.http.*;
 import java.sql.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class FinalPartida extends HttpServlet {
     public void doPost(HttpServletRequest req, HttpServletResponse res)
@@ -20,8 +22,11 @@ public class FinalPartida extends HttpServlet {
             IdUsuario = (String)sesion.getAttribute("IdUsuario");
             IdPartida = req.getParameter("IdPartida");
             IdJugador2 = req.getParameter("IdJugador2");
-
-            Class.forName("com.mysql.jdbc.Driver");
+            try {
+                    Class.forName("com.mysql.jdbc.Driver");
+                } catch (ClassNotFoundException ex) {
+                    Logger.getLogger(CrearCuenta.class.getName()).log(Level.SEVERE, null, ex);
+                }
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/conecta4", "root", "");
             st = con.createStatement();
             st2=con.createStatement();

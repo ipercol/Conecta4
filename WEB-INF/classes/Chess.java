@@ -2,6 +2,8 @@ import java.io.*;
 import javax.servlet.*;
 import javax.servlet.http.*;
 import java.sql.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 public class Chess extends HttpServlet {
     public void doPost(HttpServletRequest req, HttpServletResponse res)
             throws ServletException, IOException {
@@ -22,7 +24,11 @@ public class Chess extends HttpServlet {
             IdPartida = req.getParameter("IdPartida");
             IdJugador2 = req.getParameter("IdJugador2");
             
-            Class.forName("com.mysql.jdbc.Driver");
+            try {
+                    Class.forName("com.mysql.jdbc.Driver");
+                } catch (ClassNotFoundException ex) {
+                    Logger.getLogger(CrearCuenta.class.getName()).log(Level.SEVERE, null, ex);
+                }
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/conecta4","root","");
             st = con.createStatement();
             st2 = con.createStatement();
@@ -64,9 +70,9 @@ public class Chess extends HttpServlet {
             out.println("<BR><BR><BR>");
             
             //Creacion del tablero:
-            char [][] tablero = new char[6][7];
+            char [][] tablero = new char[6][6];
             for (int i = 0; i < 6; i++) {
-                for (int j = 0; j < 7; j++) {
+                for (int j = 0; j < 6; j++) {
                     tablero[i][j] = '-';
                 }
             }
@@ -88,7 +94,7 @@ public class Chess extends HttpServlet {
             out.println("<TABLE BORDER=\"1\">");
             for (int i = 0; i < 6; i++) {
                 out.println("<TR>");
-                for (int j = 0; j < 7; j++) {
+                for (int j = 0; j < 6; j++) {
                     out.println("<TD WIDTH=\"50\" HEIGHT=\"50\"><CENTER>" + tablero[i][j] + "</CENTER></TD>");
                 }
                 out.println("</TR>");
@@ -115,7 +121,7 @@ public class Chess extends HttpServlet {
                 turno = rs.getBoolean("turno");
                 if(turno){
                     out.println("<form METHOD = 'POST' ACTION = 'Movimientos'>");
-                    for(int i = 0; i < 7; i++){
+                    for(int i = 0; i < 6; i++){
                         out.println("<INPUT TYPE='radio' NAME='columna' VALUE='" + i + "'required>C" + i + "&nbsp;&nbsp;");
                     }
                     out.println("<INPUT TYPE='hidden' NAME='IdPartida' VALUE='" + IdPartida + "'>");

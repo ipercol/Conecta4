@@ -2,6 +2,9 @@ import java.io.*;
 import java.sql.*;
 import javax.servlet.*;
 import javax.servlet.http.*;
+
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.math.BigInteger;
@@ -20,10 +23,18 @@ public class Registro extends HttpServlet {
         HttpSession sesion;
 
         try {
+            try {
+                    Class.forName("com.mysql.jdbc.Driver");
+                } catch (ClassNotFoundException ex) {
+                    Logger.getLogger(CrearCuenta.class.getName()).log(Level.SEVERE, null, ex);
+                }
             usuario = req.getParameter("usuario");
             password = req.getParameter("password");
             correo = req.getParameter("correo");
             telefono = req.getParameter("telefono");
+            // Establece la conexión a la base de datos
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/conecta4","root","");
+            st = con.createStatement();
             
             res.setContentType("text/html");
             out = res.getWriter();
@@ -47,15 +58,7 @@ public class Registro extends HttpServlet {
                 } catch (NoSuchAlgorithmException | UnsupportedEncodingException e){
                    e.printStackTrace(); 
                 }
-
-            // Establece la conexión a la base de datos
-            try {
-                Class.forName("com.mysql.jdbc.Driver");
-                con = DriverManager.getConnection("jdbc:mysql://localhost:3306/conecta4","root","");
-                st = con.createStatement();
-            } catch (ClassNotFoundException | SQLException e) {
-                throw new ServletException("Error al conectar con la base de datos", e);
-            }
+            
 
             // Verificar si el usuario ya existe
             SQL = "SELECT COUNT(*) FROM usuarios WHERE usuario='" + usuario + "'";

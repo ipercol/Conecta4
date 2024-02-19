@@ -5,6 +5,8 @@ import javax.servlet.http.*;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.math.BigInteger;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class EditarPerfil extends HttpServlet {
     public void doPost(HttpServletRequest req, HttpServletResponse res)
@@ -17,6 +19,12 @@ public class EditarPerfil extends HttpServlet {
         PrintWriter out = res.getWriter();
 
         try {
+            try {
+                    Class.forName("com.mysql.jdbc.Driver");
+                } catch (ClassNotFoundException ex) {
+                    Logger.getLogger(CrearCuenta.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                
             out.println("<HTML><HEAD>");
             out.println("<TITLE>Resultado del Cambio de Contraseña</TITLE>");
             out.println("<link rel=\"stylesheet\" type=\"text/css\" href=\"css/inicio.css\">");
@@ -32,7 +40,6 @@ public class EditarPerfil extends HttpServlet {
             String newPassword2 = req.getParameter("newPassword2");
             
             // Comprobar si la contraseña actual coincide con la almacenada en la base de datos
-            Class.forName("com.mysql.jdbc.Driver");
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/conecta4", "root", "");
             st = con.createStatement();
             st2 = con.createStatement();

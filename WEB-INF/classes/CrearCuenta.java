@@ -3,11 +3,14 @@ import javax.servlet.*;
 import javax.servlet.http.*;
 import javax.servlet.ServletException.*;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 public class CrearCuenta extends HttpServlet {
 
     public void doPost(HttpServletRequest req, HttpServletResponse res)
             throws ServletException, IOException {
-
+    
         res.setContentType("text/html;charset=UTF-8");
 
         PrintWriter out = res.getWriter();
