@@ -59,11 +59,27 @@ public class FinalPartida extends HttpServlet {
             
             if (puntosUsuario1 > puntosUsuario2) {
                 out.println("El ganador es: " + Usuario1);
+                SQL="UPDATE usuarios SET victorias=victorias+1 WHERE IdUsuario="+IdUsuario;
+                st2.executeUpdate(SQL);
+                SQL="UPDATE clientes SET derrotas=derrotas+1 WHERE IdUsuario="+IdJugador2;
+                st3.executeUpdate(SQL);
             } else if (puntosUsuario1 == puntosUsuario2) {
                 out.println("EMPATE");
+                SQL="UPDATE usuarios SET empates=empates+1 WHERE IdUsuario="+IdUsuario;
+                st2.executeUpdate(SQL);
+                SQL="UPDATE usuarios SET empates=empates+1 WHERE IdUsuario="+IdJugador2;
+                st3.executeUpdate(SQL);
             } else {
                 out.println("El ganador es: " + Usuario2);
+                SQL="UPDATE usuarios SET derrotas=derrotas+1 WHERE IdUsuario="+IdUsuario;
+                st2.executeUpdate(SQL);
+                SQL="UPDATE usuarios SET victorias=victorias+1 WHERE IdUsuario="+IdJugador2;
+                st3.executeUpdate(SQL);
+
             }
+            
+            
+
             
             out.println("</body></html>");
         } catch (Exception e) {

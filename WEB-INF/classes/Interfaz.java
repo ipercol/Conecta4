@@ -35,31 +35,23 @@ public class Interfaz extends HttpServlet {
         res.setContentType("text/html");
         out.println("<HTML><HEAD>");
         out.println("<link rel=\"stylesheet\" type=\"text/css\" href=\"css/interfaz.css\">");
+        out.println("<link rel='shortcut icon' href='css/logo.jpg'></link>");
         out.println("</HEAD>");
         
-        out.println("<div id ='header'>");
-        out.println("<H1>Menu</H1>");
+        out.println("<BODY><CENTER>");
+        out.println("<H1>MENU</H1><BR>");
+        out.println("</CENTER>");
         
     
-        out.println("<div style='display: inline-block;'>");
         out.println("<FORM ACTION='Perfil' METHOD='POST'>");
         out.println("<INPUT TYPE='SUBMIT' VALUE='PERFIL' id='perfil'>");
         out.println("</FORM>");
-        out.println("</div>");
         
-        out.println("<div style='display: inline-block;'>");
+
         out.println("<FORM ACTION='LogOut' METHOD='POST'>");
         out.println("<INPUT TYPE='SUBMIT' VALUE='LOGOUT' id='logout'>");
         out.println("</FORM>");
-        out.println("</div>");
-        
-        
-        out.println("</div>");
-        
-        
-        
-        
-        
+
         
         out.println("<CENTER>");
         

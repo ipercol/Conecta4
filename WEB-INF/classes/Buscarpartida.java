@@ -34,6 +34,7 @@ public class BuscarPartida extends HttpServlet {
         out = res.getWriter();
         res.setContentType("text/html");
         out.println("<HTML><HEAD>");
+        out.println("<link rel='shortcut icon' href='css/logo.jpg'></link>");
         out.println("<TITLE>Interfaz</TITLE>");
         //out.println("<link rel=\"stylesheet\" type=\"text/css\" href=\"css/inicio.css\">");
 

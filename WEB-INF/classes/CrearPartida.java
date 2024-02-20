@@ -45,6 +45,7 @@ public class CrearPartida extends HttpServlet {
             out = res.getWriter();
             res.setContentType("text/html");
             out.println("<HTML><HEAD>");
+            out.println("<link rel='shortcut icon' href='css/logo.jpg'></link>");
             out.println("<TITLE>Crear Partida</TITLE>");
             out.println("</HTML><BODY><CENTER>");
             out.println("<FORM id='redirect' ACTION='Interfaz' METHOD='POST'> </FORM>");

@@ -14,7 +14,7 @@ public class Inicio extends HttpServlet {
         out.println("<HTML><HEAD>");
         out.println("<TITLE>Inicio</TITLE>");
         out.println("<link rel=\"stylesheet\" type=\"text/css\" href=\"css/inicio.css\">");
-
+        out.println("<link rel='shortcut icon' href='css/logo.jpg'></link>");
         out.println("</HEAD>");
         out.println("<BODY><CENTER>");
         out.println("<BR><BR>");

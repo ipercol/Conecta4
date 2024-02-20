@@ -9,8 +9,8 @@ public class Chess extends HttpServlet {
             throws ServletException, IOException {
         
         Connection con;
-        Statement st, st2, st3, st4, st5;
-        ResultSet rs, rs2 = null, rs3 = null, rs4, rs5;
+        Statement st, st2, st3, st4, st5, st6;
+        ResultSet rs, rs2 = null, rs3 = null, rs4, rs5, rs6;
         PrintWriter out;
         String SQL, SQL2, SQL3, SQL4, SQL5;
         String IdUsuario, IdPartida, IdJugador2, Nrival;
@@ -35,12 +35,14 @@ public class Chess extends HttpServlet {
             st3 = con.createStatement();
             st4 = con.createStatement();
             st5 = con.createStatement();
+            st6 = con.createStatement();
             
             res.setContentType("text/html;charset=UTF-8");
             out = res.getWriter();
             
             out.println("<HTML><HEAD>");
-            out.println("<TITLE>Crear Partida</TITLE>");
+            out.println("<link rel='shortcut icon' href='css/logo.jpg'></link>");
+            out.println("<TITLE>Chess</TITLE>");
             out.println("<CENTER>");
             
              
@@ -126,7 +128,7 @@ public class Chess extends HttpServlet {
                     }
                     out.println("<INPUT TYPE='hidden' NAME='IdPartida' VALUE='" + IdPartida + "'>");
                     out.println("<INPUT TYPE='hidden' NAME='IdJugador2' VALUE='" + IdJugador2 + "'><BR>");
-                    out.println("<input type=\"submit\" value=\"Tiradica\">");
+                    out.println("<input type=\"submit\" value=\"Tirar\">");
                     out.println("</form>");
                 }   else{
                     out.println("<BR>");
@@ -139,6 +141,25 @@ public class Chess extends HttpServlet {
             out.println("<form action='Interfaz' method='post'>");
             out.println("<button type='submit'>Volver</button>");
             out.println("</form>");
+            
+            SQL="SELECT * FROM tablero WHERE IdPartida='" + IdPartida + "'";
+            rs6=st6.executeQuery(SQL);
+            int tirada = 0;
+            while(rs6.next()){
+                tirada++;
+            }
+            if(tirada==36){
+                out.println("<FORM id='redirect' ACTION='FinalPartida' METHOD='POST'>");
+                out.println("<INPUT TYPE='hidden' NAME='IdPartida' VALUE='" + IdPartida + "'>");
+                out.println("<INPUT TYPE='hidden' NAME='IdJugador2' VALUE='" + IdJugador2 + "'>");
+                out.println("</FORM>");
+                //script
+                out.println("<script>");
+                out.println("window.onload = function() {");
+                out.println(" document.getElementById('redirect').submit();");
+                out.println("};");
+                out.println("</script>"); 
+            } 
 
             
             

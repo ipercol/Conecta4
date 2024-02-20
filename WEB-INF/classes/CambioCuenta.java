@@ -2,6 +2,7 @@ import java.io.*;
 import javax.servlet.*;
 import javax.servlet.http.*;
 import javax.servlet.ServletException.*;
+
 public class CambioCuenta extends HttpServlet {
 
     public void doPost(HttpServletRequest req, HttpServletResponse res)
@@ -11,7 +12,7 @@ public class CambioCuenta extends HttpServlet {
 
         PrintWriter out = res.getWriter();
         out.println("<HTML><HEAD>");
-        out.println("<TITLE>CrearCuenta</TITLE>");
+        out.println("<TITLE>CambiCuenta</TITLE>");
         out.println("<link rel=\"stylesheet\" type=\"text/css\" href=\"css/inicio.css\">");
 
         out.println("</HEAD>");
@@ -19,6 +20,9 @@ public class CambioCuenta extends HttpServlet {
         out.println("<BR><BR>");
         out.println("<H1>CONECTA 4</H1>");
         out.println("<FORM METHOD=POST ACTION=EditarPerfil>");
+        
+        out.println("<LABEL for=actualPassword>Password actual:</LABEL><BR>");
+        out.println("<INPUT TYPE=PASSWORD id=actualPassword NAME=actualPassword><BR><BR>");
         
         out.println("<LABEL for=newPassword>Nueva password:</LABEL><BR>");
         out.println("<INPUT TYPE=PASSWORD id=newPassword NAME=newPassword><BR><BR>");
