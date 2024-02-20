@@ -138,9 +138,10 @@ public class Chess extends HttpServlet {
                 out.println("No se ha podido determinar de quien es el turno. Consulta fallida");
             }
             out.println("<BR><BR>");
-            out.println("<form action='Interfaz' method='post'>");
-            out.println("<button type='submit'>Volver</button>");
-            out.println("</form>");
+            out.println("<div id='triangle'></div>");
+            out.println("<FORM ACTION='Interfaz' METHOD='POST'>");
+            out.println("<BUTTON TYPE='SUBMIT'>Volver</BUTTON>");
+            out.println("</FORM>");
             
             SQL="SELECT * FROM tablero WHERE IdPartida='" + IdPartida + "'";
             rs6=st6.executeQuery(SQL);

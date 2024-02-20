@@ -18,6 +18,8 @@ public class CrearPartida extends HttpServlet {
         
         try{
             
+            out = res.getWriter();
+            res.setContentType("text/html");
             sesion = req.getSession();
             IdUsuario = (String)sesion.getAttribute("IdUsuario");
             
@@ -30,6 +32,11 @@ public class CrearPartida extends HttpServlet {
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/conecta4","root","");
             st = con.createStatement();
             
+            out.println("<HTML><HEAD>");
+            out.println("<TITLE>CrearPartida</TITLE>");
+            //out.println("<link rel=\"stylesheet\" type=\"text/css\" href=\"css/inicio.css\">");
+            out.println("<link rel='shortcut icon' href='css/logo.jpg'></link>");
+            out.println("</HEAD>");
             
             SQL = "INSERT INTO partidas (full) VALUES(0)";
             st.executeUpdate(SQL,Statement.RETURN_GENERATED_KEYS);

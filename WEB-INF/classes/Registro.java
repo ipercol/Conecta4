@@ -19,7 +19,7 @@ public class Registro extends HttpServlet {
         ResultSet rs;
         PrintWriter out;
         out=res.getWriter();
-        String SQL, usuario, password,correo,telefono;
+        String SQL, usuario, password, reppassword, correo,telefono;
         HttpSession sesion;
 
         try {
@@ -30,6 +30,7 @@ public class Registro extends HttpServlet {
                 }
             usuario = req.getParameter("usuario");
             password = req.getParameter("password");
+            reppassword = req.getParameter("reppassword");
             correo = req.getParameter("correo");
             telefono = req.getParameter("telefono");
             // Establece la conexión a la base de datos
@@ -39,53 +40,60 @@ public class Registro extends HttpServlet {
             res.setContentType("text/html");
             out = res.getWriter();
             
-            if (usuario == null || usuario.isEmpty() || password == null || password.isEmpty() || correo == null || correo.isEmpty() || telefono == null || telefono.isEmpty()) {
-                out.println("<FORM id='redirect' ACTION='CrearCuenta' METHOD='POST'> </FORM>");
-                out.println("<script>");
-                out.println("window.onload = function() {");
-                out.println(" document.getElementById('redirect').submit();");
-                out.println("};");
-                out.println("</script>");
-                throw new ServletException("Todos los campos son obligatorios.");
-            }
+            out.println("<HTML><HEAD>");
+            out.println("<TITLE>Registro</TITLE>");
+            //out.println("<link rel=\"stylesheet\" type=\"text/css\" href=\"css/inicio.css\">");
+            out.println("<link rel='shortcut icon' href='css/logo.jpg'></link>");
+            out.println("</HEAD>");
+            out.println("<BR><BR><BR>");
+            out.println("<BODY><CENTER>");
             
-            // Hash de la contraseña
-             try{
-                MessageDigest digest = MessageDigest.getInstance("SHA-512");
-                digest.reset();
-                digest.update(password.getBytes("utf8"));
-                password = String.format("%0128x", new BigInteger(1, digest.digest()));
-                } catch (NoSuchAlgorithmException | UnsupportedEncodingException e){
-                   e.printStackTrace(); 
-                }
-            
-
-            // Verificar si el usuario ya existe
-            SQL = "SELECT COUNT(*) FROM usuarios WHERE usuario='" + usuario + "'";
-            rs = st.executeQuery(SQL);
-            
-            if (rs.next() && rs.getInt(1)==0) {
-                // Usuario no existe, procedemos a registrarlo
-                SQL = "INSERT INTO usuarios (usuario, password, correo, telefono) VALUES ('" + usuario + "', '" + password + "','" + correo + "','" + telefono + "')";
-                st.executeUpdate(SQL);
-                rs.close();
-                
-                SQL = "SELECT IdUsuario FROM usuarios WHERE usuario='" + usuario + "'";
-                rs = st.executeQuery(SQL);
-                res.sendRedirect("Inicio");
+            if (usuario == null || usuario.isEmpty() || password == null || password.isEmpty() || reppassword == null || reppassword.isEmpty() || correo == null || correo.isEmpty() || telefono == null || telefono.isEmpty()) {
+                out.println("<H2>No puede dejar campos vacios.</H2>");
+                out.println("<FORM METHOD=POST ACTION=CrearCuenta>"); 
+                out.println("<INPUT TYPE=SUBMIT VALUE=Volver>");
+                out.println("</FORM></CENTER>");
+            } else  if (!password.equals(reppassword)){
+                out.println("<H2>Las contraseñas no coinciden.</H2>");
+                out.println("<FORM METHOD=POST ACTION=CrearCuenta>"); 
+                out.println("<INPUT TYPE=SUBMIT VALUE=Volver>");
+                out.println("</FORM></CENTER>");
             } else {
-                // Usuario ya existe
+            
+                // Hash de la contraseña
+                try{
+                    MessageDigest digest = MessageDigest.getInstance("SHA-512");
+                    digest.reset();
+                    digest.update(password.getBytes("utf8"));
+                    password = String.format("%0128x", new BigInteger(1, digest.digest()));
+                    } catch (NoSuchAlgorithmException | UnsupportedEncodingException e){
+                       e.printStackTrace(); 
+                    }
                 
-                out.println("<FORM id='redirect' ACTION='CrearCuenta' METHOD='POST'> </FORM>");
-                //Mediante un script hacemos que redirija directamente a la pagina del menu lanzando el formulario anterior
-                out.println("<script>");
-                out.println("window.onload = function() {");
-                out.println(" document.getElementById('redirect').submit();");
-                out.println("};");
-                out.println("</script>");
-                // Puede agregar un enlace para volver al formulario de registro o simplemente redirigir
-            }
-            rs.close();
+        
+                // Verificar si el usuario ya existe
+                SQL = "SELECT COUNT(*) FROM usuarios WHERE usuario='" + usuario + "'";
+                rs = st.executeQuery(SQL);
+                
+                if (rs.next() && rs.getInt(1)==0) {
+                    // Usuario no existe, procedemos a registrarlo
+                    SQL = "INSERT INTO usuarios (usuario, password, correo, telefono) VALUES ('" + usuario + "', '" + password + "','" + correo + "','" + telefono + "')";
+                    st.executeUpdate(SQL);
+                    rs.close();
+                    
+                    SQL = "SELECT IdUsuario FROM usuarios WHERE usuario='" + usuario + "'";
+                    rs = st.executeQuery(SQL);
+                    res.sendRedirect("Inicio");
+                } else {
+                    // Usuario ya existe
+                    out.println("<H2>El usuario ya existe. Pruebe otro nombre.</H2>");
+                    out.println("<FORM METHOD=POST ACTION=CrearCuenta>"); 
+                    out.println("<INPUT TYPE=SUBMIT VALUE=Volver>");
+                    out.println("</FORM></CENTER>");
+                }
+                rs.close();
+                }
+ 
             st.close();
             con.close();
             out.close();

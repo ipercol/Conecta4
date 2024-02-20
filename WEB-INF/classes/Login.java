@@ -52,25 +52,28 @@ public class Login extends HttpServlet {
             out = res.getWriter();
             res.setContentType("text/html");
             out.println("<HTML><HEAD>");
-            out.println("<TITLE>LOG</TITLE>");
-            out.println("<link rel=\"stylesheet\" type=\"text/css\" href=\"css/inicio.css\">");
-            out.println("</HTML><BODY><CENTER>");
+            out.println("<TITLE>Login</TITLE>");
+            //out.println("<link rel=\"stylesheet\" type=\"text/css\" href=\"css/inicio.css\">");
+            out.println("<link rel='shortcut icon' href='css/logo.jpg'></link>");
+            out.println("</HEAD><BODY><CENTER>");
         
             if(rs.next()){
                 sesion.setAttribute("IdUsuario", rs.getString(1));
                 out.println("<FORM id='redirect' ACTION='Interfaz' METHOD='POST'> </FORM>");
-                //Mediante un script hacemos que redirija directamente a la pagina del menu lanzando el formulario anterior
                 out.println("<script>");
                 out.println("window.onload = function() {");
                 out.println(" document.getElementById('redirect').submit();");
                 out.println("};");
                 out.println("</script>"); 
             } else{
-                out.println("<BR>");
-                out.println("<H2>No existe ninguna cuenta con estos credenciales</H2><BR>");
-                res.sendRedirect("Inicio");
+                out.println("<BR><BR><BR><BR>");
+                out.println("<H1>¡No existe ninguna cuenta con estos credenciales!</H1><BR>");
+                out.println("<FORM METHOD=GET ACTION=Inicio>"); 
+                out.println("<INPUT id='volver' TYPE=SUBMIT VALUE=Volver>");
+                out.println("</FORM>");
                 }
-
+                
+            out.println("</CENTER></BODY></HTML>");
             rs.close();
             st.close();
             con.close();

@@ -12,27 +12,33 @@ public class CambioCuenta extends HttpServlet {
 
         PrintWriter out = res.getWriter();
         out.println("<HTML><HEAD>");
-        out.println("<TITLE>CambiCuenta</TITLE>");
-        out.println("<link rel=\"stylesheet\" type=\"text/css\" href=\"css/inicio.css\">");
-
+        out.println("<TITLE>CambioCuenta</TITLE>");
+        //out.println("<link rel=\"stylesheet\" type=\"text/css\" href=\"css/inicio.css\">");
+        out.println("<link rel='shortcut icon' href='css/logo.jpg'></link>");
         out.println("</HEAD>");
+        
         out.println("<BODY><CENTER>");
         out.println("<BR><BR>");
-        out.println("<H1>CONECTA 4</H1>");
-        out.println("<FORM METHOD=POST ACTION=EditarPerfil>");
+        out.println("<H1>Cambio de Contraseña</H1>");
         
-        out.println("<LABEL for=actualPassword>Password actual:</LABEL><BR>");
-        out.println("<INPUT TYPE=PASSWORD id=actualPassword NAME=actualPassword><BR><BR>");
+        out.println("<H4><FORM METHOD=POST ACTION=EditarPerfil>");
         
-        out.println("<LABEL for=newPassword>Nueva password:</LABEL><BR>");
-        out.println("<INPUT TYPE=PASSWORD id=newPassword NAME=newPassword><BR><BR>");
+        out.println("<LABEL for=actualPassword>Contraseña anterior:</LABEL><BR>");
+        out.println("<INPUT TYPE=PASSWORD id=actualPassword NAME=actualPassword VALUE=\"\"><BR><BR>");
         
-        out.println("<LABEL for=newPassword2>Confirmar nueva password:</LABEL><BR>");
-        out.println("<INPUT TYPE=PASSWORD id=newPassword2 NAME=newPassword2><BR><BR>");
+        out.println("<LABEL for=newPassword>Nueva contraseña:</LABEL><BR>");
+        out.println("<INPUT TYPE=PASSWORD id=newPassword NAME=newPassword VALUE=\"\"><BR><BR>");
         
-        out.println("<INPUT TYPE=SUBMIT VALUE='Cambio Datos'><BR>");
+        out.println("<LABEL for=newPassword2>Confirmar contraseña:</LABEL><BR>");
+        out.println("<INPUT TYPE=PASSWORD id=newPassword2 NAME=repnewPassword VALUE=\"\"><BR><BR>");
+        
+        out.println("<INPUT TYPE=SUBMIT VALUE='ACEPTAR'><BR>");
+        out.println("</FORM><H4>");
+        
+        out.println("<div id='triangle'></div>"); //flecha de volver
+        out.println("<FORM ACTION='Interfaz' METHOD='POST'>");
+        out.println("<BUTTON TYPE='SUBMIT'>Volver</BUTTON>");
         out.println("</FORM>");
-        
         out.println("</BODY></HTML>");
 
         out.close();

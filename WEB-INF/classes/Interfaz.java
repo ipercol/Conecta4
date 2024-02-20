@@ -16,7 +16,6 @@ public class Interfaz extends HttpServlet {
         HttpSession sesion;
 
     try{
-        // Obtener el ID de usuario de la sesión
         sesion = req.getSession();
         IdUsuario = (String)sesion.getAttribute("IdUsuario");
         
@@ -34,7 +33,8 @@ public class Interfaz extends HttpServlet {
         out = res.getWriter();
         res.setContentType("text/html");
         out.println("<HTML><HEAD>");
-        out.println("<link rel=\"stylesheet\" type=\"text/css\" href=\"css/interfaz.css\">");
+        out.println("<TITLE>Interfaz</TITLE>");
+        //out.println("<link rel=\"stylesheet\" type=\"text/css\" href=\"css/interfaz.css\">");
         out.println("<link rel='shortcut icon' href='css/logo.jpg'></link>");
         out.println("</HEAD>");
         
@@ -47,16 +47,12 @@ public class Interfaz extends HttpServlet {
         out.println("<INPUT TYPE='SUBMIT' VALUE='PERFIL' id='perfil'>");
         out.println("</FORM>");
         
-
         out.println("<FORM ACTION='LogOut' METHOD='POST'>");
         out.println("<INPUT TYPE='SUBMIT' VALUE='LOGOUT' id='logout'>");
         out.println("</FORM>");
 
         
         out.println("<CENTER>");
-        
-        
-        
         
         // Consulta SQL para obtener todas las partidas disponibles para el usuario actual
         SQL = "SELECT * FROM detallespartidas WHERE IdUsuario='" + IdUsuario + "' AND turno=1";
@@ -65,49 +61,42 @@ public class Interfaz extends HttpServlet {
         out.println("<div id='partidas-container'>");
         // Mostrar las partidas disponibles
         out.println("<h2>Tus partidas</h2>");
-        out.println("<p>Tu turno:</p>");
+        out.println("<H4>Tu turno:</H4>");
         while (rs.next()){
             String IdPartida = rs.getString(2);
             SQL2 = "SELECT detallespartidas.IdPartida, usuarios.IdUsuario, usuarios.usuario FROM usuarios INNER JOIN detallespartidas ON "  
             + "usuarios.IdUsuario = detallespartidas.IdUsuario WHERE detallespartidas.IdPartida='" + IdPartida + "' AND usuarios.IdUsuario <> '" + IdUsuario + "'"; 
-            //SQL2 = "SELECT IdUsuario FROM detallespartidas WHERE IdPartida='" + rs.getString(2) + "' AND IdUsuario <> '" + IdUsuario + "'";
             rs2=st2.executeQuery(SQL2);
-
             while (rs2.next()){
                 IdJugador2 = rs2.getString(2);
                 out.println("<FORM ACTION='Chess' METHOD='POST'>");
                 out.println("<INPUT TYPE='hidden' NAME='IdPartida' VALUE='" + rs.getString(2) + "'>");
                 out.println("<INPUT TYPE='hidden' NAME='IdJugador2' VALUE='" + rs2.getString(2) + "'>");
-                out.println("<BUTTON id='partidas' TYPE='Entrar'>Partida " + rs.getString(2) + " contra " + rs2.getString(3) + "</BUTTON></FORM>");
+                out.println("<BUTTON id='entrar' TYPE='SUBMIT'>" + rs.getString(2) + ".Tú contra " + rs2.getString(3) + "</BUTTON></FORM>");
             }
             rs2.close();
         }
         rs.close();
         
-        out.println("<p>Turno del rival:</p>");
+        out.println("<H4>Turno del rival:</H4>");
         SQL = "SELECT * FROM detallespartidas WHERE IdUsuario='" + IdUsuario + "' AND turno=0";
         rs = st.executeQuery(SQL);
         while (rs.next()){
             String IdPartida = rs.getString(2);
             SQL2 = "SELECT detallespartidas.IdPartida, usuarios.IdUsuario, usuarios.usuario FROM usuarios INNER JOIN detallespartidas ON "  
             + "usuarios.IdUsuario = detallespartidas.IdUsuario WHERE detallespartidas.IdPartida='" + IdPartida + "' AND usuarios.IdUsuario <> '" + IdUsuario + "'"; 
-            //SQL2 = "SELECT IdUsuario FROM detallespartidas WHERE IdPartida='" + rs.getString(2) + "' AND IdUsuario <> '" + IdUsuario + "'";
             rs2=st2.executeQuery(SQL2);
-
             while (rs2.next()){
                 IdJugador2 = rs2.getString(2);
                 out.println("<FORM ACTION='Chess' METHOD='POST'>");
                 out.println("<INPUT TYPE='hidden' NAME='IdPartida' VALUE='" + rs.getString(2) + "'>");
                 out.println("<INPUT TYPE='hidden' NAME='IdJugador2' VALUE='" + rs2.getString(2) + "'>");
-                out.println("<BUTTON id='partidas' TYPE='Entrar'>Partida " + rs.getString(2) + " contra " + rs2.getString(3) + "</BUTTON></FORM>");
+                out.println("<BUTTON id='entrar' TYPE='SUBMIT'>" + rs.getString(2) + " .Tú contra " + rs2.getString(3) + "</BUTTON></FORM>");
             }
             rs2.close();
         }
         rs.close();
-        
-        out.println("</div><BR><BR>");
-        
-        out.println("<div style='margin-top: 20px;'>"); // Añadir margen arriba
+        out.println("</div>");
         
         out.println("<FORM ACTION='BuscarPartida' METHOD='POST'>");
         out.println("<INPUT TYPE='SUBMIT' VALUE='BUSCAR PARTIDA'>");
@@ -118,8 +107,6 @@ public class Interfaz extends HttpServlet {
         out.println("<FORM ACTION='CrearPartida' METHOD='POST'>");
         out.println("<INPUT TYPE='SUBMIT' VALUE='CREAR PARTIDA'>");
         out.println("</FORM>");
-        
-        out.println("</div>");
 
         out.println("</BODY></HTML>");
         
