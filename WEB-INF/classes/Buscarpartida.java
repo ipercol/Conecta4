@@ -16,7 +16,6 @@ public class BuscarPartida extends HttpServlet {
         HttpSession sesion;
 
     try{
-        // Obtener el ID de usuario de la sesión
         sesion = req.getSession();
         IdUsuario = (String)sesion.getAttribute("IdUsuario");
         try {
@@ -28,24 +27,25 @@ public class BuscarPartida extends HttpServlet {
         st = con.createStatement();
         st2 = con.createStatement();
         
-        
-
-        // Renderizar la página HTML para mostrar las partidas disponibles
         out = res.getWriter();
         res.setContentType("text/html");
         out.println("<HTML><HEAD>");
-        out.println("<link rel='shortcut icon' href='css/logo.jpg'></link>");
-        out.println("<TITLE>Interfaz</TITLE>");
         //out.println("<link rel=\"stylesheet\" type=\"text/css\" href=\"css/inicio.css\">");
-
+        out.println("<link rel='shortcut icon' href='css/logo.jpg'></link>");
+        out.println("<TITLE>BuscarPartida</TITLE>");
         out.println("</HEAD>");
+        
         out.println("<BODY><CENTER>");
         out.println("<BR><BR>");
         out.println("<H1>CONECTA 4444</H1>");
         
-        //Boton Perfil
         out.println("<FORM METHOD = 'POST' ACTION = 'Perfil'>");
-        out.println("<INPUT TYPE='SUBMIT' VALUE='Ver Perfil'>");
+        out.println("<INPUT TYPE='SUBMIT' VALUE='Perfil'>");
+        out.println("</FORM>");
+        
+        out.println("<div id='triangle'></div>"); 
+        out.println("<FORM ACTION='Interfaz' METHOD='POST'>");
+        out.println("<BUTTON TYPE='SUBMIT'>Volver</BUTTON>");
         out.println("</FORM>");
         
         // Consulta SQL para obtener todas las partidas disponibles para el usuario
@@ -57,7 +57,10 @@ public class BuscarPartida extends HttpServlet {
         } else{
             do{
                 IdPartida = rs.getString(1);
-                out.println("<a href='Inscripcion?IdPartida=" + IdPartida + "'>Partida " + IdPartida + "</a><br>");
+                out.println("<FORM ACTION='Inscripcion' METHOD='POST'>");
+                out.println("<INPUT TYPE='hidden' NAME='IdPartida' VALUE='" + IdPartida + "'>");
+                out.println("<INPUT TYPE='hidden' NAME='IdUsuario' VALUE='" + IdUsuario + "'>");
+                out.println("<BUTTON id='entrar' TYPE='SUBMIT'>Partida " + IdPartida + "</BUTTON></FORM>");
             }
             while (rs.next());
         }

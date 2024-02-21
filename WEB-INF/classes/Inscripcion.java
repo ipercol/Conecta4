@@ -6,7 +6,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class Inscripcion extends HttpServlet {
-    public void doGet(HttpServletRequest req, HttpServletResponse res)
+    public void doPost(HttpServletRequest req, HttpServletResponse res)
             throws ServletException, IOException {
         
         Connection con;
@@ -47,9 +47,9 @@ public class Inscripcion extends HttpServlet {
             out.println("<HTML><HEAD>");
             out.println("<TITLE>LOG</TITLE>");
             out.println("<link rel=\"stylesheet\" type=\"text/css\" href=\"css/inicio.css\">");
+            out.println("<link rel='shortcut icon' href='css/logo.jpg'></link>");
             out.println("</HTML><BODY><CENTER>");
             out.println("<FORM id='redirect' ACTION='Interfaz' METHOD='POST'> </FORM>");
-            //Mediante un script hacemos que redirija directamente a la pagina del menu lanzando el formulario anterior
             out.println("<script>");
             out.println("window.onload = function() {");
             out.println(" document.getElementById('redirect').submit();");

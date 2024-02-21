@@ -4,6 +4,7 @@ import java.io.*;
 import java.sql.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.servlet.ServletException.*;
 
 public class Movimientos extends HttpServlet {
 
@@ -18,19 +19,18 @@ public class Movimientos extends HttpServlet {
         HttpSession sesion;
 
         try {
-            try {
-                Class.forName("com.mysql.jdbc.Driver");
-            } catch (ClassNotFoundException ex) {
-                Logger.getLogger(CrearCuenta.class.getName()).log(Level.SEVERE, null, ex);
-            }
-
             sesion = req.getSession();
             IdUsuario = (String) sesion.getAttribute("IdUsuario");
             IdPartida = req.getParameter("IdPartida");
             IdJugador2 = req.getParameter("IdJugador2");
             columna = req.getParameter("columna");
-
-            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/conecta4", "root", "");
+            
+            try {
+                Class.forName("com.mysql.jdbc.Driver");
+            } catch (ClassNotFoundException ex) {
+                Logger.getLogger(CrearCuenta.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/conecta4","root","");
             st = con.createStatement();
             st2 = con.createStatement();
             st3 = con.createStatement();
@@ -43,6 +43,10 @@ public class Movimientos extends HttpServlet {
             res.setContentType("text/html");
             out = res.getWriter();
             out.println("<HTML><BODY>");
+            out.println("<HEAD>");
+            out.println("<link rel='shortcut icon' href='css/logo.jpg'></link>");
+            out.println("<TITLE>Chess</TITLE>");
+            out.println("<CENTER>");
             
             
             SQL="SELECT fila FROM tablero WHERE IdPartida='" + IdPartida + "' AND columna='" + columna+  "' ORDER BY fila";
@@ -108,137 +112,129 @@ public class Movimientos extends HttpServlet {
                 
                 //PUNTUACION
                 int total = 0;
-                int total2 = 0;
                 int puntos = 0;
-                int puntos2 = 0;
                 int conecta = 1;
                 
                 //PUNTOS VERTICAL--------------------------------------------------
                 
                 for (int j = 0; j < 6; j++) {
                     puntos = 0;
-                    puntos2 = 0;
                     conecta = 1;
                     for (int i = 1; i < 6; i++) {
                         if(tablero[i][j] == tablero[i-1][j] && tablero[i][j] != '-') {
                             conecta++;
                             if(conecta >= 4 && conecta <= 6){
                                 if(tablero[i][j] == 'X'){
-                                    puntos += 10;
+                                    puntos = puntos + 10;
                                 } 
-                                if(tablero[i][j] == 'O'){
-                                    puntos2 += 10;
-                                }
                             }
                         } else{
                             conecta = 1;
                         }
                     }
-                    total += puntos;
-                    total2 += puntos2;
+                    total = total + puntos;
                 }
                 
                    
                 //PUNTOS HORIZONTAL--------------------------------------------------
                 for (int i = 0; i < 6; i++) {
                     puntos = 0;
-                    puntos2 = 0;
                     conecta = 1;
                     for (int j = 1; j < 6; j++) {
                         if(tablero[i][j] == tablero[i][j-1] && tablero[i][j] != '-') {
                             conecta++;
                             if(conecta>=4 && conecta <= 6){
                                 if(tablero[i][j] == 'X'){
-                                    puntos += 10;
-                                }
-                                if(tablero[i][j] == 'O'){
-                                    puntos2 += 10;
+                                    puntos = puntos + 10;
                                 }
                             }
                         } else{
                             conecta = 1;
                         }
                     }
-                    total += puntos;
-                    total2 += puntos2;
+                    total = total + puntos;
                 }
             
                 
                 //PUNTOS DIAGONAL IZQ-DER--------------------------------------------------
                 for (int i = 0; i < 3; i++) {
-                    for (int j = 0; j < 3; j++) {
+                    for (int act = 0; act < 3; act++) {
                         puntos = 0;
-                        puntos2 = 0;
                         conecta = 1;
-                        for (int k = 1; k < 4; k++) {
-                            int fil = i + k;
-                            int col = j + k;
+                        for (int sig = 1; sig < 4; sig++) {
+                            int fil = i + sig;
+                            int col = act + sig;
                             if (tablero[fil][col] == tablero[fil - 1][col - 1] && tablero[fil][col] != '-') {
                                 conecta++;
                                 if (conecta >= 4) {
                                     if (tablero[fil][col] == 'X') {
                                         puntos = puntos + 10;
                                     }
-                                    if(tablero[i][j] == 'O'){
-                                        puntos2 = puntos2 + 10;
-                                    }
                                 }
                             } else {
                                 conecta = 1;
                             }
                         }
                         total = total + puntos;
-                        total2 = total2 + puntos2;
                     }
                 }
                 
                 //PUNTOS DIAGONAL DER-IZQ--------------------------------------------------
                 for (int i = 0; i < 3; i++) {
-                    for (int j = 5; j > 2; j--) {
+                    for (int act = 5; act > 2; act--) {
                         puntos = 0;
-                        puntos2 = 0;
                         conecta = 1;
-                        for (int k = 1; k < 4; k++) {
-                            int fil = i + k;
-                            int col = j - k;
+                        for (int sig = 1; sig < 4; sig++) {
+                            int fil = i + sig;
+                            int col = act - sig;
                             if (tablero[fil][col] == tablero[fil - 1][col + 1] && tablero[fil][col] != '-') {
                                 conecta++;
                                 if (conecta >= 4) {
                                     if (tablero[fil][col] == 'X') {
                                         puntos = puntos + 10;
                                     }
-                                    if(tablero[i][j] == 'O'){
-                                        puntos2 = puntos2 + 10;
-                                    }
                                 }
                             } else {
                                 conecta = 1;
                             }
                         }
                         total = total + puntos;
-                        total2 = total2 + puntos2;
                     }
                 }
                 
                 SQL="UPDATE detallespartidas SET puntos =" + total + " WHERE IdUsuario='" + IdUsuario + "' AND IdPartida='" + IdPartida + "'";
                 st7.executeUpdate(SQL);
                 
-                
-
- 
-                //REDIRECT
-                out.println("<FORM id='redirect' ACTION='Chess' METHOD='POST'>");
-                out.println("<INPUT TYPE='hidden' NAME='IdPartida' VALUE='" + IdPartida + "'>");
-                out.println("<INPUT TYPE='hidden' NAME='IdJugador2' VALUE='" + IdJugador2 + "'>");
-                out.println("</FORM>");
-                //script
-                out.println("<script>");
-                out.println("window.onload = function() {");
-                out.println(" document.getElementById('redirect').submit();");
-                out.println("};");
-                out.println("</script>");
-                
-                
+                SQL="SELECT * FROM tablero WHERE IdPartida='" + IdPartida + "'";
+                rs6=st6.executeQuery(SQL);
+                int tirada = 0;
+                while(rs6.next()){
+                    tirada++;
+                }
+                if(tirada==36){
+                    out.println("<FORM id='redirect' ACTION='Puntuacion' METHOD='POST'>");
+                    out.println("<INPUT TYPE='hidden' NAME='IdPartida' VALUE='" + IdPartida + "'>");
+                    out.println("<INPUT TYPE='hidden' NAME='IdJugador2' VALUE='" + IdJugador2 + "'>");
+                    out.println("</FORM>");
+                    //script
+                    out.println("<script>");
+                    out.println("window.onload = function() {");
+                    out.println(" document.getElementById('redirect').submit();");
+                    out.println("};");
+                    out.println("</script>"); 
+                } else {
+                    //REDIRECT
+                    out.println("<FORM id='redirect' ACTION='Chess' METHOD='POST'>");
+                    out.println("<INPUT TYPE='hidden' NAME='IdPartida' VALUE='" + IdPartida + "'>");
+                    out.println("<INPUT TYPE='hidden' NAME='IdJugador2' VALUE='" + IdJugador2 + "'>");
+                    out.println("</FORM>");
+                    //script
+                    out.println("<script>");
+                    out.println("window.onload = function() {");
+                    out.println(" document.getElementById('redirect').submit();");
+                    out.println("};");
+                    out.println("</script>");
+                }
                 rs5.close();
                 rs6.close();
             }
@@ -249,6 +245,8 @@ public class Movimientos extends HttpServlet {
             st4.close();
             st5.close();
             st6.close();
+            st7.close();
+            st8.close();
             rs.close();
             con.close();
             out.close();

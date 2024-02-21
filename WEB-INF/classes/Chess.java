@@ -4,6 +4,7 @@ import javax.servlet.http.*;
 import java.sql.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.servlet.ServletException.*;
 public class Chess extends HttpServlet {
     public void doPost(HttpServletRequest req, HttpServletResponse res)
             throws ServletException, IOException {

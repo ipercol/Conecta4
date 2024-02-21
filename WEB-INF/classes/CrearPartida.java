@@ -32,11 +32,12 @@ public class CrearPartida extends HttpServlet {
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/conecta4","root","");
             st = con.createStatement();
             
-            out.println("<HTML><HEAD>");
+            out.println("<HTML><BODY><HEAD>");
             out.println("<TITLE>CrearPartida</TITLE>");
             //out.println("<link rel=\"stylesheet\" type=\"text/css\" href=\"css/inicio.css\">");
             out.println("<link rel='shortcut icon' href='css/logo.jpg'></link>");
             out.println("</HEAD>");
+            out.println("<CENTER>");
             
             SQL = "INSERT INTO partidas (full) VALUES(0)";
             st.executeUpdate(SQL,Statement.RETURN_GENERATED_KEYS);
@@ -49,27 +50,19 @@ public class CrearPartida extends HttpServlet {
             SQL = "INSERT INTO detallespartidas (IdPartida, IdUsuario) VALUES ('" + IdPartida + "', '" + IdUsuario + "')";
             st.executeUpdate(SQL);
             
-            out = res.getWriter();
-            res.setContentType("text/html");
-            out.println("<HTML><HEAD>");
-            out.println("<link rel='shortcut icon' href='css/logo.jpg'></link>");
-            out.println("<TITLE>Crear Partida</TITLE>");
-            out.println("</HTML><BODY><CENTER>");
-            out.println("<FORM id='redirect' ACTION='Interfaz' METHOD='POST'> </FORM>");
-            out.println("<script>");
-            out.println("window.onload = function() {");
-            out.println(" document.getElementById('redirect').submit();");
-            out.println("};");
-            out.println("</script>");
+            out.println("<BR><BR><BR><BR>");
+            out.println("<H2>¡Perfecto!</H2>");
+            out.println("<H2>Ahora espera a que se una algun rival.</H2><BR>");
+            out.println("<FORM METHOD=POST ACTION=Interfaz>"); 
+            out.println("<INPUT id='volver' TYPE=SUBMIT VALUE=Volver>");
+            out.println("</FORM>");
+            
+            out.println("</CENTER></BODY></HTML>");
             
             con.close();
             st.close();
             rs.close();
             out.close();
-            
-            
-            
-            
             
         } catch (Exception e){
             System.err.println(e);

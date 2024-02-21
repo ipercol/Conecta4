@@ -97,7 +97,9 @@ public class Interfaz extends HttpServlet {
         }
         rs.close();
         out.println("</div>");
+        out.println("<BR>");
         
+        //BOTON BUSCAR PARTIDA
         out.println("<FORM ACTION='BuscarPartida' METHOD='POST'>");
         out.println("<INPUT TYPE='SUBMIT' VALUE='BUSCAR PARTIDA'>");
         out.println("</FORM>");
